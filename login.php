@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+  session_start();
+ ?>
 <html>
 <body>
 	<h2>Login</h2>
