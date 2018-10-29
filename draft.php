@@ -24,18 +24,18 @@
 	
 	foreach( $dbh->query("select * from playerLifetime") as $rows){
 		echo "<TR>";
-		echo "<TH>" .$rows[0]"</TH> ";
-		echo "<TH>" .$rows[1]"</TH> ";
-		echo "<TH>" .$rows[2]"</TH> ";
-		echo "<TH>" .$rows[3]"</TH> ";
-		echo "<TH>" .$rows[4]"</TH> ";
-		echo "<TH>" .$rows[5]"</TH> ";
-		echo "<TH>" .$rows[6]"</TH> ";
-		echo "<TH>" .$rows[7]"</TH> ";
-		echo "<TH>" .$rows[8]"</TH> ";
+		echo "<TH>" .$rows[0]."</TH> ";
+		echo "<TH>" .$rows[1]."</TH> ";
+		echo "<TH>" .$rows[2]."</TH> ";
+		echo "<TH>" .$rows[3]."</TH> ";
+		echo "<TH>" .$rows[4]."</TH> ";
+		echo "<TH>" .$rows[5]."</TH> ";
+		echo "<TH>" .$rows[6]."</TH> ";
+		echo "<TH>" .$rows[7]."</TH> ";
+		echo "<TH>" .$rows[8]."</TH> ";
 		echo "</TR>"; 
 	}
-	
+	echo "</table>":;
 
 	
 	
