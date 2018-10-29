@@ -35,9 +35,36 @@
 		echo "<TH>" .$rows[8]."</TH> ";
 		echo "</TR>"; 
 	}
-	echo "</table>":;
+	echo "</table>";
 
+	echo "<h1>Goalie</h1>";
+	echo "<table style='width:45%; float:left' border='1'>";
+	echo "<TR>";
+	echo "<TH> Player Name </TH> ";
+	echo "<TH> Team Name </TH>";
+	echo "<TH> Wins </TH>";
+	echo "<TH> Losses </TH>";
+	echo "<TH> Ties </TH>";
+	echo "<TH> Saves </TH>";
+	echo "<TH> Minutes in Goal </TH>";
+	echo "<TH> Goals Against </TH>";
+	echo "<TH> Penlty Minutes </TH>";
+	echo "</TR>";
 	
+	foreach( $dbh->query("select * from playerLifetime") as $rows){
+		echo "<TR>";
+		echo "<TH>" .$rows[0]."</TH> ";
+		echo "<TH>" .$rows[1]."</TH> ";
+		echo "<TH>" .$rows[2]."</TH> ";
+		echo "<TH>" .$rows[3]."</TH> ";
+		echo "<TH>" .$rows[4]."</TH> ";
+		echo "<TH>" .$rows[8]."</TH> ";
+		echo "<TH>" .$rows[6]."</TH> ";
+		echo "<TH>" .$rows[7]."</TH> ";
+		echo "<TH>" .$rows[5]."</TH> ";
+		echo "</TR>"; 
+	}
+	echo "</table>";
 	
 	
 ?>
