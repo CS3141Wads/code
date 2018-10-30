@@ -31,7 +31,7 @@
 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="">Fantasy Broomabll</a>
+        <a class="pure-menu-heading" href="">Fantasy Broomaball</a>
 
         <ul class="pure-menu-list">
 			<li class="pure-menu-item"><a href="profile.php" class="pure-menu-link">Profile</a></li>
@@ -63,7 +63,7 @@
          }
          $dbh->commit();
       ?>
-
+	  </br></br>
       <h1 name="teamName" align="center"><?php echo $teamName?></h3>
 
       <font name="owner" size="5"><u>Team Owner:</u> <?php echo $name?></font></br></br>
