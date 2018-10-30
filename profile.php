@@ -29,14 +29,14 @@
          $dbh->commit();
       ?>
 
-      <h1 align="center"><?php echo $teamName?></h3>
+      <h1 name="teamName" align="center"><?php echo $teamName?></h3>
 
-      <font size="5"><u>Team Owner:</u> <?php echo $name?></font></br></br>
+      <font name="owner" size="5"><u>Team Owner:</u> <?php echo $name?></font></br></br>
 
       <font size="5"><u>Current Record:</u></font></br>
-        <font size="5">&nbsp;&nbsp;&nbsp;<?php echo $wins?> wins</font></br>
-        <font size="5">&nbsp;&nbsp;&nbsp;<?php echo $losses?> losses</font></br>
-        <font size="5">&nbsp;&nbsp;&nbsp;<?php echo $ties?> ties</font></br></br>
+        <font name="wins" size="5">&nbsp;&nbsp;&nbsp;<?php echo $wins?> wins</font></br>
+        <font name="losses" size="5">&nbsp;&nbsp;&nbsp;<?php echo $losses?> losses</font></br>
+        <font name="ties" size="5">&nbsp;&nbsp;&nbsp;<?php echo $ties?> ties</font></br></br>
 
       <font size="5"><u>Current Roster:</u></font></br>
         <?php
