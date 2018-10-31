@@ -66,6 +66,8 @@
          $dbh->commit();
       ?>
 	  </br></br>
+
+<div style=margin-left: 1em;>
 	  
       <h1 name="teamName" align="center"><?php echo $teamName?></h3>
 
@@ -88,12 +90,13 @@
           }
          ?>
 
+   </div>
+
    </body>
 
    <style>
     h1 {
       font-size: 4em;
-      margin-left: 1em;
     }
    </style>
 </html>
