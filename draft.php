@@ -45,7 +45,7 @@
     $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 	
 	if(isset($_POST["nameP"])){
-		echo $_POST["nameP];
+		echo $_POST["nameP"];
 	}
 	
 	echo "<h1>Player</h1>";
