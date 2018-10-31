@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+  session_start();
+ ?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -75,6 +78,7 @@
         <a class="pure-menu-heading" href="">Fantasy Broomball</a>
 
         <ul class="pure-menu-list">
+			<li class="pure-menu-item"><a href="logout.php" class="pure-menu-link">Logout</a></li>
 			<li class="pure-menu-item"><a href="profile.php" class="pure-menu-link">Profile</a></li>
 			<li class="pure-menu-item"><a href="draft.php" class="pure-menu-link">Draft</a></li>
         </ul>
