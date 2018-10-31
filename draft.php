@@ -92,12 +92,46 @@
 <h2 style="float: right"><u> TODO who is up </u></h2>
 </div>
 
+<?php
+	$config = parse_ini_file("db.ini");
+   	$dbh = new PDO($config['dsn'], $config['username'], $config['password']);
+  	$dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+	
+	$name = $_SESSION["name"];
+        $username = $_SESSION["usernameToLoad"];
+        $teamName = $_SESSION["teamName"];
+
+	echo "<table style='width:45% border='1' align='center'>";
+	foreach( $dbh->query("select * from Team where user = '.$username.'") as $rows){
+		echo "<TR>";
+		echo "<TH>" .$rows[2]."</TH> ";
+		echo "</TR>";
+		echo "<TR>";
+		echo "<TH>" .$rows[3]."</TH> ";
+		echo "</TR>";
+		echo "<TR>";
+		echo "<TH>" .$rows[4]."</TH> ";
+		echo "</TR>";
+		echo "<TR>";
+		echo "<TH>" .$rows[5]."</TH> ";
+		echo "</TR>";
+		echo "<TR>";
+		echo "<TH>" .$rows[6]."</TH> ";
+		echo "</TR>";
+		echo "<TR>";
+		echo "<TH>" .$rows[7]."</TH> ";
+		echo "</TR>";
+		echo "<TR>";
+		echo '</form>';
+		echo "</TR>"; 
+	}
+	echo "</table>";
+	
+?>
+
 <button class="collapsible">Players</button>
 <div class="content">
 <?php
-	$config = parse_ini_file("db.ini");
-    $dbh = new PDO($config['dsn'], $config['username'], $config['password']);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 	
 	if(isset($_POST["nameP"])){
 		echo $_POST["nameP"];
