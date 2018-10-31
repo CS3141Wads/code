@@ -54,8 +54,10 @@
 </form>
 <form class="pure-form pure-form-stacked" action="createAccount.php">
 	<fieldset>
-		<label for="createAccount">Don't have an account yet?</label>
-		<button type="submit" name="createAccountB" value="create" class="pure-button pure-button-primary">Create one Here</button>
+		<div style="margin-left: 1em;">
+			<label for="createAccount">Don't have an account yet?</label>
+			<button type="submit" name="createAccountB" value="create" class="pure-button pure-button-primary">Create one Here</button>
+		</div>
 	</fieldset>
 </form>
 	
