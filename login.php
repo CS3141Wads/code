@@ -32,7 +32,7 @@
 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="">Fantasy Broomaball</a>
+        <a class="pure-menu-heading" href="">Fantasy Broomball</a>
 
         <ul class="pure-menu-list">
             <li class="pure-menu-item"><a href="login.php" class="pure-menu-link">Login</a></li>
@@ -40,16 +40,24 @@
         </ul>
     </div>
 </div>
-
-
-	<h2>Login</h2>
-		<form action = "checkLogin.php" method = "post">
-			Username:<br/> <input type = "email" placeholder = "email@example.com" name = "username" required/> <br/>
-			Password:<br/> <input type = "password" name = "password" required/> <br/>
-			<input type = "submit" name = "login" value = "Login"/>
-		</form>
-		<p>Don't have an account yet? <br/>
-		<input name="createAccountB" type="button" value="Create one here" onclick="window.location.href='createAccount.php'"/> <br/>
-		</p>
+</br></br>
+<form class="pure-form pure-form-stacked" action="checkLogin.php" method="post">
+	<fieldset>
+		<div class="pure-u-1 pure-u-md-1-4">
+			<label for="username">Username</label>
+			<input type="email" placeholder="email@example.com" name="username" required/>
+			<label for="password">Password</label>
+			<input type="password" name="password" required/>
+			<button type="submit" name="login" value="Login" class="pure-button pure-button-primary">Login</button> 
+		</div>
+	</fieldset> 
+</form>
+<form class="pure-form pure-form-stacked" action="createAccount.php">
+	<fieldset>
+		<label for="createAccount">Don't have an account yet?</label>
+		<button type="submit" name="createAccountB" value="create" class="pure-button pure-button-primary">Create one Here</button>
+	</fieldset>
+</form>
+	
 </body>
 </html>

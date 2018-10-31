@@ -28,7 +28,7 @@
 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="">Fantasy Broomaball</a>
+        <a class="pure-menu-heading" href="">Fantasy Broomball</a>
 
         <ul class="pure-menu-list">
             <li class="pure-menu-item"><a href="login.php" class="pure-menu-link">Login</a></li>
@@ -36,15 +36,23 @@
         </ul>
     </div>
 </div>
+</br></br>
 
-	<h2>Create an Account</h2>
-		<form action = "newAccount.php" method = "post">
-			Name:<br/> <input type =  "text" name="name" required /><br/>
-			Username:<br/> <input type = "email" placeholder="email@example.com" name = "username" required /><br />
-			Password:<br/> <input type = "password" name = "password" required /><br/>
-			Team Name: <br/> <input type = "text" name = "teamName" required /><br/>
-			<br />
-			<input type = "submit" name = "createAccount" value = "Create Account"/>
-		</form>
+<form class="pure-form pure-form-stacked" action = "newAccount.php" method = "post">
+	<fieldset>
+		<div class="pure-u-1 pure-u-md-1-4">
+			<label for="name">Name</label>
+			<input type =  "text" name="name" required />
+			<label for="username">Username</label>
+			<input type = "email" placeholder="email@example.com" name = "username" required />
+			<label for="password">Password</label>
+			<input type = "password" name = "password" required />
+			<label for="teamName">Team Name</label>
+			<input type = "text" name = "teamName" required />
+			<button type="submit" name="createAccount" value="Create Account" class="pure-button pure-button-primary">Create Account</button>
+		</div>
+	</fieldset> 
+</form>
+
 </body>
 </html>
