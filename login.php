@@ -43,7 +43,7 @@
 </br></br>
 <form class="pure-form pure-form-stacked" action="checkLogin.php" method="post">
 	<fieldset>
-		<div class="pure-u-1 pure-u-md-1-4">
+		<div class="pure-u-1 pure-u-md-1-4" style="margin-left: 1em;">
 			<label for="username">Username</label>
 			<input type="email" placeholder="email@example.com" name="username" required/>
 			<label for="password">Password</label>
@@ -54,8 +54,10 @@
 </form>
 <form class="pure-form pure-form-stacked" action="createAccount.php">
 	<fieldset>
-		<label for="createAccount">Don't have an account yet?</label>
-		<button type="submit" name="createAccountB" value="create" class="pure-button pure-button-primary">Create one Here</button>
+		<div style="margin-left: 1em;">
+			<label for="createAccount">Don't have an account yet?</label>
+			<button type="submit" name="createAccountB" value="create" class="pure-button pure-button-primary">Create one Here</button>
+		</div>
 	</fieldset>
 </form>
 	

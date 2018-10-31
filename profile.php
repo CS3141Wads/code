@@ -66,6 +66,8 @@
          $dbh->commit();
       ?>
 	  </br></br>
+
+<div style=margin-left: 1em;>
 	  
       <h1 name="teamName" align="center"><?php echo $teamName?></h3>
 
@@ -87,6 +89,8 @@
             echo "Goalie: $row[0]<br>";
           }
          ?>
+
+   </div>
 
    </body>
 
