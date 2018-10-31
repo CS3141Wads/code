@@ -40,7 +40,7 @@
 
 <form class="pure-form pure-form-stacked" action = "newAccount.php" method = "post">
 	<fieldset>
-		<div class="pure-u-1 pure-u-md-1-4">
+		<div class="pure-u-1 pure-u-md-1-4" style="margin-left: 1em;">
 			<label for="name">Name</label>
 			<input type =  "text" name="name" required />
 			<label for="username">Username</label>
