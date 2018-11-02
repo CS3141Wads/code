@@ -104,7 +104,7 @@
 
 
 	if(isset($_POST["nameP"])){
-	$player = $_POST["nameP"];
+		$player = $_POST["nameP"];
 		foreach( $dbh->query("select * from Team where user = '".$username."'") as $rows){
 			if($rows[2]==NULL){
 				$dbh->query("insert into draftedPlayer values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["goals"].",".$_POST["assists"].",".$_POST["points"].",".$_POST["penalty"].",0) ");
@@ -123,6 +123,12 @@
 				$dbh->query("update Team set player5 = '".$player."' where user = '".$username."' ");
 			}
 		}
+	}
+	
+	if(isset($_POST["rm1"])){
+		$player = $_POST["rm1"];
+		$dbh->query("update Team set player1 = NULL where user = '".$username."' ");
+		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
 	}
 	
 	if(isset($_POST["rm1"])){
@@ -213,8 +219,13 @@
 	
 ?>
 
-<button class="collapsible">Players</button>
-<div class="content">
+<div class="tab">
+      <button class="tablinks" onclick="openTab(event, 'Players')" id="defaultOpen">Players</button>
+      <button class="tablinks" onclick="openTab(event, 'Goalies')">Goalies</button>
+</div>
+ <div id="Players" class="tabcontent" >
+<!--<button class="collapsible">Players</button>
+<div class="content">-->
 <?php
 	echo "<h1>Player</h1>";
 	echo "<table style='width:45% border='1' align='center'>";
@@ -261,8 +272,9 @@
 ?>
 </div>
 
-<button class="collapsible">Open Goalies</button>
-<div class="content">
+ <div id="Goalies" class="tabcontent">
+<!--<button class="collapsible">Open Goalies</button>
+<div class="content">-->
 <?php
 	echo "<h1>Goalie</h1>";
 	echo "<table style='width:45% border='1' align='center'>";
@@ -303,7 +315,7 @@
 ?>
 </div>
 
-<script>
+<!--<script>
 var coll = document.getElementsByClassName("collapsible");
 var i;
 
@@ -318,7 +330,39 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
-</script>
+</script> -->
+
+<script>
+    document.getElementById("defaultOpen").click();
+
+    function sortEntries(button_id) {
+      var filter = button_id + " DESC";
+
+      '<%$_SESSION["entryFilter"] = "' + filter + '"; %>';
+      location.reload(true);
+    }
+
+    function openTab(evt, cityName) {
+      // Declare all variables
+      var i, tabcontent, tablinks;
+
+      // Get all elements with class="tabcontent" and hide them
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+      }
+
+      // Get all elements with class="tablinks" and remove the class "active"
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+
+      // Show the current tab, and add an "active" class to the button that opened the tab
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+  </script>
 
 </body>
 </html>
