@@ -27,7 +27,7 @@
             <link rel="stylesheet" href="marketing.css">
         <!--<![endif]-->
 </head>
-<body>
+<body style="margin-left: 1em;">
 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
@@ -67,13 +67,11 @@
       ?>
 	  </br></br>
 
-<div style=margin-left: 1em;>
-	  
       <h1 name="teamName" align="center"><?php echo $teamName?></h3>
 
       <font name="owner" size="5"><u>Team Owner:</u> <?php echo $name?></font></br></br>
 
-      <font size="5"><u>Current Record:</u></font></br>
+       <font size="5"><u>Current Record:</u></font></br>
         <font name="wins" size="5">&nbsp;&nbsp;&nbsp;<?php echo $wins?> wins</font></br>
         <font name="losses" size="5">&nbsp;&nbsp;&nbsp;<?php echo $losses?> losses</font></br>
         <font name="ties" size="5">&nbsp;&nbsp;&nbsp;<?php echo $ties?> ties</font></br></br>
@@ -89,8 +87,6 @@
             echo "Goalie: $row[0]<br>";
           }
          ?>
-
-   </div>
 
    </body>
 
