@@ -9,7 +9,7 @@
     <meta name="description" content="A layout example that shows off a responsive product landing page.">
 	<style>
 	.collapsible {
-  	 background-color: #777; 
+  	 background-color: #777;
   	  color: white;
   	  cursor: pointer;
   	  padding: 18px;
@@ -52,18 +52,18 @@
 	}
 	</style>
     <title>Draft</title>
-    
+
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-" crossorigin="anonymous">
-    
+
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-old-ie-min.css">
     <![endif]-->
     <!--[if gt IE 8]><!-->
         <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
     <!--<![endif]-->
-    
+
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-    
+
         <!--[if lte IE 8]>
             <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
         <![endif]-->
@@ -101,6 +101,8 @@
     $username = $_SESSION["usernameToLoad"];
     $teamName = $_SESSION["teamName"];
 		
+
+
 	if(isset($_POST["nameP"])){
 	$player = $_POST["nameP"];
 		foreach( $dbh->query("select * from Team where user = '".$username."'") as $rows){
@@ -144,6 +146,8 @@
 <div class="content">
 <?php
 	
+=======
+>>>>>>> 1dcdcb04543774fd2d143291af5f146baeb29c5c
 	echo "<h1>Player</h1>";
 	echo "<table style='width:45% border='1' align='center'>";
 	echo "<TR>";
@@ -158,7 +162,7 @@
 	echo "<TH> Penalty Minutes  </TH>";
 	echo "<TH> </TH>";
 	echo "</TR>";
-	
+
 	foreach( $dbh->query("select * from playerLifetime") as $rows){
 		if($rows[9]){
 			echo "<TR>";
@@ -182,7 +186,7 @@
 			echo '<input type="hidden" name="penalty" value="'.$rows[8].'">';
 			echo '<TD> <input type="submit" name="select2" value="Pick"> </TD>';
 			echo '</form>';
-			echo "</TR>"; 
+			echo "</TR>";
 		}
 	}
 	echo "</table>";
@@ -191,7 +195,7 @@
 
 <button class="collapsible">Open Goalies</button>
 <div class="content">
-<?php 
+<?php
 	echo "<h1>Goalie</h1>";
 	echo "<table style='width:45% border='1' align='center'>";
 	echo "<TR>";
@@ -205,7 +209,7 @@
 	echo "<TH> Goals Against </TH>";
 	echo "<TH> Penalty Minutes </TH>";
 	echo "</TR>";
-	
+
 	foreach( $dbh->query("select * from goalieLifetime") as $rows){
 		if($rows[9]){
 			echo "<TR>";
@@ -223,11 +227,11 @@
 			echo '<TD> <input type="submit" name="select2" value="Pick"> </TD>';
 			echo '</form>';
 			echo "</TR>";
-		}			
+		}
 	}
 	echo "</table>";
-	
-	
+
+
 ?>
 </div>
 
