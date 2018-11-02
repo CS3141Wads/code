@@ -98,11 +98,22 @@
   	$dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 	
 	$name = $_SESSION["name"];
-        $username = $_SESSION["usernameToLoad"];
-        $teamName = $_SESSION["teamName"];
+    $username = $_SESSION["usernameToLoad"];
+    $teamName = $_SESSION["teamName"];
+		
+	if(isset($_POST["nameP"])){
+	$player = $_POST["nameP"];
+		foreach( $dbh->query("select * from Team where user = '".$username."'") as $rows){
+			if($rows[2]==NULL){
+				echo "word";
+				$dbh->query("insert into draftedPlayer values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["goals"].",".$_POST["assists"].",".$_POST["points"].",".$_POST["penalty"].",0) ");
+				$dbh->query("update Team set player1 = '".$player."' where user = '".$username."' ");
+			}
+		}
+	}
 
 	echo "<table style='width:45% border='1' align='center'>";
-	foreach( $dbh->query("select * from Team where user = '.$username.'") as $rows){
+	foreach( $dbh->query("select * from Team where user = '".$username."'") as $rows){
 		echo "<TR>";
 		echo "<TH>" .$rows[2]."</TH> ";
 		echo "</TR>";
@@ -133,10 +144,6 @@
 <div class="content">
 <?php
 	
-	if(isset($_POST["nameP"])){
-		echo $_POST["nameP"];
-	}
-	
 	echo "<h1>Player</h1>";
 	echo "<table style='width:45% border='1' align='center'>";
 	echo "<TR>";
@@ -148,7 +155,7 @@
 	echo "<TH> Goals  </TH>";
 	echo "<TH> Assists  </TH>";
 	echo "<TH> Points  </TH>";
-	echo "<TH> Penlty Minutes  </TH>";
+	echo "<TH> Penalty Minutes  </TH>";
 	echo "<TH> </TH>";
 	echo "</TR>";
 	
@@ -166,6 +173,13 @@
 			echo "<TH>" .$rows[8]."</TH> ";
 			echo '<form action="draft.php" method="post">';
 			echo '<input type="hidden" name="nameP" value="'.$rows[0].'">';
+			echo '<input type="hidden" name="nameT" value="'.$rows[1].'">';
+			echo '<input type="hidden" name="wins" value="'.$rows[2].'">';
+			echo '<input type="hidden" name="losses" value="'.$rows[3].'">';
+			echo '<input type="hidden" name="goals" value="'.$rows[5].'">';
+			echo '<input type="hidden" name="assists" value="'.$rows[6].'">';
+			echo '<input type="hidden" name="points" value="'.$rows[7].'">';
+			echo '<input type="hidden" name="penalty" value="'.$rows[8].'">';
 			echo '<TD> <input type="submit" name="select2" value="Pick"> </TD>';
 			echo '</form>';
 			echo "</TR>"; 
@@ -189,7 +203,7 @@
 	echo "<TH> Saves </TH>";
 	echo "<TH> Minutes in Goal </TH>";
 	echo "<TH> Goals Against </TH>";
-	echo "<TH> Penlty Minutes </TH>";
+	echo "<TH> Penalty Minutes </TH>";
 	echo "</TR>";
 	
 	foreach( $dbh->query("select * from goalieLifetime") as $rows){
