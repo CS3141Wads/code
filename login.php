@@ -8,18 +8,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A layout example that shows off a responsive product landing page.">
     <title>Login</title>
-    
+
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-" crossorigin="anonymous">
-    
+
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-old-ie-min.css">
     <![endif]-->
     <!--[if gt IE 8]><!-->
         <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
     <!--<![endif]-->
-    
+
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-    
+
         <!--[if lte IE 8]>
             <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
         <![endif]-->
@@ -48,9 +48,9 @@
 			<input type="email" placeholder="email@example.com" name="username" required/>
 			<label for="password">Password</label>
 			<input type="password" name="password" required/>
-			<button type="submit" name="login" value="Login" class="pure-button pure-button-primary">Login</button> 
+			<button type="submit" name="login" value="Login" class="pure-button pure-button-primary">Login</button>
 		</div>
-	</fieldset> 
+	</fieldset>
 </form>
 <form class="pure-form pure-form-stacked" action="createAccount.php">
 	<fieldset>
@@ -60,6 +60,6 @@
 		</div>
 	</fieldset>
 </form>
-	
+
 </body>
 </html>

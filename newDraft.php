@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<?php
+  session_start();
+
+  $config = parse_ini_file("db.ini");
+  $dbh = new PDO($config['dsn'], $config['username'], $config['password']);
+  $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+ ?>
 <html>
   <head>
 
@@ -7,19 +14,114 @@
   <body>
     <!-- Tab links -->
     <div class="tab">
-      <button class="tablinks" onclick="openCity(event, 'London')">Players</button>
-      <button class="tablinks" onclick="openCity(event, 'Paris')">Goalies</button>
+      <button class="tablinks" onclick="openTab(event, 'Players')" id="defaultOpen">Players</button>
+      <button class="tablinks" onclick="openTab(event, 'Goalies')">Goalies</button>
     </div>
 
     <!-- Tab content -->
-    <div id="London" class="tabcontent">
-      <h3>Players</h3>
-      <p>These are the players.</p>
+    <div id="Players" class="tabcontent">
+      <div style="text-align: center;">
+        <h1>Order players by:</h1>
+        <button class="button" id="wins" onClick="sortEntries(this.id)">Wins</button>
+        <button class="button" id="looses" onClick="sortEntries(this.id)">Losses</button>
+        <button class="button" id="ties" onClick="sortEntries(this.id)">Ties</button>
+        <button class="button" id="goals" onClick="sortEntries(this.id)">Goals</button>
+        <button class="button" id="assists" onClick="sortEntries(this.id)">Assists</button>
+        <button class="button" id="points" onClick="sortEntries(this.id)">Points</button>
+        <button class="button" id="penaltyMinutes" onClick="sortEntries(this.id)">Penalty Minutes</button>
+        </br>
+        </br>
+        </br>
+      </div>
+
+
+      <?php
+      	if(isset($_POST["nameP"])){
+      		echo $_POST["nameP"];
+      	}
+
+        if(isset($_SESSION["entryFilter"])) {
+
+        } else {
+          $_SESSION["entryFilter"] = "goals ASC";
+        }
+
+        $sortByThis = $_SESSION["entryFilter"];
+
+      	echo "<table style='width:45% border='1' align='center'>";
+      	echo "<TR>";
+      	echo "<TH> <u>Player Name</u> </TH> ";
+      	echo "<TH> <u>Team Name</u> </TH>";
+      	echo "<TH> <u>Wins</u>  </TH>";
+      	echo "<TH> <u>Losses</u>  </TH>";
+      	echo "<TH> <u>Ties</u>  </TH>";
+      	echo "<TH> <u>Goals</u>  </TH>";
+      	echo "<TH> <u>Assists</u>  </TH>";
+      	echo "<TH> <u>Points</u>  </TH>";
+      	echo "<TH> <u>Penlty Minutes</u>  </TH>";
+      	echo "<TH> </TH>";
+      	echo "</TR>";
+
+      	foreach( $dbh->query("SELECT * FROM playerLifetime ORDER BY $sortByThis") as $rows){
+      		if($rows[9]){
+      			echo "<TR>";
+      			echo "<TH>" .$rows[0]."</TH> ";
+      			echo "<TH>" .$rows[1]."</TH> ";
+      			echo "<TH>" .$rows[2]."</TH> ";
+      			echo "<TH>" .$rows[3]."</TH> ";
+      			echo "<TH>" .$rows[4]."</TH> ";
+      			echo "<TH>" .$rows[5]."</TH> ";
+      			echo "<TH>" .$rows[6]."</TH> ";
+      			echo "<TH>" .$rows[7]."</TH> ";
+      			echo "<TH>" .$rows[8]."</TH> ";
+      			echo '<form action="draft.php" method="post">';
+      			echo '<input type="hidden" name="nameP" value="'.$rows[0].'">';
+      			echo '<TD> <input type="submit" name="select2" value="Pick"> </TD>';
+      			echo '</form>';
+      			echo "</TR>";
+      		}
+      	}
+      	echo "</table>";
+      ?>
     </div>
 
-    <div id="Paris" class="tabcontent">
-      <h3>Goalies</h3>
-      <p>These are the goalies.</p>
+    <div id="Goalies" class="tabcontent">
+      <?php
+      	echo "<h1>Goalie</h1>";
+      	echo "<table style='width:45% border='1' align='center'>";
+      	echo "<TR>";
+      	echo "<TH> Player Name </TH> ";
+      	echo "<TH> Team Name </TH>";
+      	echo "<TH> Wins </TH>";
+      	echo "<TH> Losses </TH>";
+      	echo "<TH> Ties </TH>";
+      	echo "<TH> Saves </TH>";
+      	echo "<TH> Minutes in Goal </TH>";
+      	echo "<TH> Goals Against </TH>";
+      	echo "<TH> Penlty Minutes </TH>";
+      	echo "</TR>";
+
+      	foreach( $dbh->query("select * from goalieLifetime") as $rows){
+      		if($rows[9]){
+      			echo "<TR>";
+      			echo "<TH>" .$rows[0]."</TH> ";
+      			echo "<TH>" .$rows[1]."</TH> ";
+      			echo "<TH>" .$rows[2]."</TH> ";
+      			echo "<TH>" .$rows[3]."</TH> ";
+      			echo "<TH>" .$rows[4]."</TH> ";
+      			echo "<TH>" .$rows[8]."</TH> ";
+      			echo "<TH>" .$rows[6]."</TH> ";
+      			echo "<TH>" .$rows[7]."</TH> ";
+      			echo "<TH>" .$rows[5]."</TH> ";
+      			echo '<form action="draft.php" method="post">';
+      			echo '<input type="hidden" name="nameG" value="'.$rows[0].'">';
+      			echo '<TD> <input type="submit" name="select2" value="Pick"> </TD>';
+      			echo '</form>';
+      			echo "</TR>";
+      		}
+      	}
+      	echo "</table>";
+      ?>
     </div>
   </body>
 
@@ -62,7 +164,16 @@
   </style>
 
   <script>
-    function openCity(evt, cityName) {
+    document.getElementById("defaultOpen").click();
+
+    function sortEntries(button_id) {
+      var filter = button_id + " DESC";
+
+      '<%$_SESSION["entryFilter"] = "' + filter + '"; %>';
+      location.reload(true);
+    }
+
+    function openTab(evt, cityName) {
       // Declare all variables
       var i, tabcontent, tablinks;
 
