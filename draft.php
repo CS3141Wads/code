@@ -92,8 +92,6 @@
 <h2 style="float: right"><u> TODO who is up </u></h2>
 </div>
 
-<button class="collapsible">Players</button>
-<div class="content">
 <?php
 	$config = parse_ini_file("db.ini");
     $dbh = new PDO($config['dsn'], $config['username'], $config['password']);
@@ -120,37 +118,37 @@
 			}
 		}
 	}
-	
+
 	if(isset($_POST["rm1"])){
 		$player = $_POST["rm1"];
 		$dbh->query("update Team set player1 = NULL where user = '".$username."' ");
 		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
 	}
-	
+
 	if(isset($_POST["rm1"])){
 		$player = $_POST["rm1"];
 		$dbh->query("update Team set player1 = NULL where user = '".$username."' ");
 		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
 	}
-	
+
 	if(isset($_POST["rm2"])){
 		$player = $_POST["rm2"];
 		$dbh->query("update Team set player2 = NULL where user = '".$username."' ");
 		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
 	}
-	
+
 	if(isset($_POST["rm3"])){
 		$player = $_POST["rm3"];
 		$dbh->query("update Team set player3 = NULL where user = '".$username."' ");
 		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
 	}
-	
+
 	if(isset($_POST["rm4"])){
 		$player = $_POST["rm4"];
 		$dbh->query("update Team set player4 = NULL where user = '".$username."' ");
 		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
 	}
-	
+
 	if(isset($_POST["rm5"])){
 		$player = $_POST["rm5"];
 		$dbh->query("update Team set player5 = NULL where user = '".$username."' ");
@@ -209,10 +207,10 @@
 		echo "</TR>";
 		echo "<TR>";
 		echo '</form>';
-		echo "</TR>"; 
+		echo "</TR>";
 	}
 	echo "</table>";
-	
+
 ?>
 
 <div class="tab">
@@ -224,7 +222,7 @@
 <div class="content">-->
 <?php
 		echo $_POST["nameP"];
-	
+
 
 	echo "<h1>Player</h1>";
 	echo "<table style='width:45% border='1' align='center'>";
