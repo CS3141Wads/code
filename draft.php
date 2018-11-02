@@ -107,30 +107,101 @@
 	$player = $_POST["nameP"];
 		foreach( $dbh->query("select * from Team where user = '".$username."'") as $rows){
 			if($rows[2]==NULL){
-				echo "word";
 				$dbh->query("insert into draftedPlayer values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["goals"].",".$_POST["assists"].",".$_POST["points"].",".$_POST["penalty"].",0) ");
 				$dbh->query("update Team set player1 = '".$player."' where user = '".$username."' ");
+			} else if($rows[3]==NULL){
+				$dbh->query("insert into draftedPlayer values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["goals"].",".$_POST["assists"].",".$_POST["points"].",".$_POST["penalty"].",0) ");
+				$dbh->query("update Team set player2 = '".$player."' where user = '".$username."' ");
+			} else if($rows[4]==NULL){
+				$dbh->query("insert into draftedPlayer values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["goals"].",".$_POST["assists"].",".$_POST["points"].",".$_POST["penalty"].",0) ");
+				$dbh->query("update Team set player3 = '".$player."' where user = '".$username."' ");
+			} else if($rows[5]==NULL){
+				$dbh->query("insert into draftedPlayer values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["goals"].",".$_POST["assists"].",".$_POST["points"].",".$_POST["penalty"].",0) ");
+				$dbh->query("update Team set player4 = '".$player."' where user = '".$username."' ");
+			} else if($rows[6]==NULL){
+				$dbh->query("insert into draftedPlayer values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["goals"].",".$_POST["assists"].",".$_POST["points"].",".$_POST["penalty"].",0) ");
+				$dbh->query("update Team set player5 = '".$player."' where user = '".$username."' ");
 			}
 		}
+	}
+	
+	if(isset($_POST["rm1"])){
+		$player = $_POST["rm1"];
+		$dbh->query("update Team set player1 = NULL where user = '".$username."' ");
+		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
+	}
+	
+	if(isset($_POST["rm2"])){
+		$player = $_POST["rm2"];
+		$dbh->query("update Team set player2 = NULL where user = '".$username."' ");
+		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
+	}
+	
+	if(isset($_POST["rm3"])){
+		$player = $_POST["rm3"];
+		$dbh->query("update Team set player3 = NULL where user = '".$username."' ");
+		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
+	}
+	
+	if(isset($_POST["rm4"])){
+		$player = $_POST["rm4"];
+		$dbh->query("update Team set player4 = NULL where user = '".$username."' ");
+		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
+	}
+	
+	if(isset($_POST["rm5"])){
+		$player = $_POST["rm5"];
+		$dbh->query("update Team set player5 = NULL where user = '".$username."' ");
+		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
 	}
 
 	echo "<table style='width:45% border='1' align='center'>";
 	foreach( $dbh->query("select * from Team where user = '".$username."'") as $rows){
-		echo "<TR>";
-		echo "<TH>" .$rows[2]."</TH> ";
-		echo "</TR>";
-		echo "<TR>";
-		echo "<TH>" .$rows[3]."</TH> ";
-		echo "</TR>";
-		echo "<TR>";
-		echo "<TH>" .$rows[4]."</TH> ";
-		echo "</TR>";
-		echo "<TR>";
-		echo "<TH>" .$rows[5]."</TH> ";
-		echo "</TR>";
-		echo "<TR>";
-		echo "<TH>" .$rows[6]."</TH> ";
-		echo "</TR>";
+		if($rows[2] != NULL){
+			echo "<TR>";
+			echo "<TH>" .$rows[2]."</TH> ";
+			echo '<form action="draft.php" method="post">';
+			echo '<input type="hidden" name="rm1" value="'.$rows[2].'">';
+			echo '<TD> <input type="submit" name="select2" value="Remove"> </TD>';
+			echo '</form>';
+			echo "</TR>";
+		}
+		if($rows[3] != NULL){
+			echo "<TR>";
+			echo "<TH>" .$rows[3]."</TH> ";
+			echo '<form action="draft.php" method="post">';
+			echo '<input type="hidden" name="rm2" value="'.$rows[3].'">';
+			echo '<TD> <input type="submit" name="select2" value="Remove"> </TD>';
+			echo '</form>';
+			echo "</TR>";
+		}
+		if($rows[4] != NULL){
+			echo "<TR>";
+			echo "<TH>" .$rows[4]."</TH> ";
+			echo '<form action="draft.php" method="post">';
+			echo '<input type="hidden" name="rm3" value="'.$rows[4].'">';
+			echo '<TD> <input type="submit" name="select2" value="Remove"> </TD>';
+			echo '</form>';
+			echo "</TR>";
+		}
+		if($rows[5] != NULL){
+			echo "<TR>";
+			echo "<TH>" .$rows[5]."</TH> ";
+			echo '<form action="draft.php" method="post">';
+			echo '<input type="hidden" name="rm4" value="'.$rows[5].'">';
+			echo '<TD> <input type="submit" name="select2" value="Remove"> </TD>';
+			echo '</form>';
+			echo "</TR>";
+		}
+		if($rows[6] != NULL){
+			echo "<TR>";
+			echo "<TH>" .$rows[6]."</TH> ";
+			echo '<form action="draft.php" method="post">';
+			echo '<input type="hidden" name="rm5" value="'.$rows[6].'">';
+			echo '<TD> <input type="submit" name="select2" value="Remove"> </TD>';
+			echo '</form>';
+			echo "</TR>";
+		}
 		echo "<TR>";
 		echo "<TH>" .$rows[7]."</TH> ";
 		echo "</TR>";
@@ -145,9 +216,6 @@
 <button class="collapsible">Players</button>
 <div class="content">
 <?php
-	
-=======
->>>>>>> 1dcdcb04543774fd2d143291af5f146baeb29c5c
 	echo "<h1>Player</h1>";
 	echo "<table style='width:45% border='1' align='center'>";
 	echo "<TR>";
