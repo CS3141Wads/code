@@ -224,7 +224,7 @@
 <div class="content">-->
 <?php
 		echo $_POST["nameP"];
-	}
+	
 
 	echo "<h1>Player</h1>";
 	echo "<table style='width:45% border='1' align='center'>";
