@@ -32,7 +32,7 @@
 <body>
 
 <div class="header">
-    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed"> 
         <a class="pure-menu-heading" href="">Fantasy Broomball</a>
 
         <ul class="pure-menu-list">
@@ -44,15 +44,76 @@
     </div>
 </div>
 
-</br></br></br>
+</br></br>
 
 <div class="pure-g">
-	<div class="pure-u-1-2">
-		<p>Left half of the screen</p>
+	<div class="pure-u-1-4">
+		<div style="margin-left: 1em;">
+			<h2>Rankings</h2>
+			<table class="pure-table pure-table-horizontal">
+				<thead>
+					<tr>
+						<th>Team</th>
+						<th>Score</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$name = $_SESSION["name"];
+					$username = $_SESSION["usernameToLoad"];
+					$password = $_SESSION["passwordToLoad"];
+					$teamName = $_SESSION["teamName"];
+					
+					$config = parse_ini_file("db.ini");
+					$dbh = new PDO($config['dsn'], $config['username'], $config['password']);
+					$dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+				
+					foreach($dbh->query("select name, score from Team order by score desc limit 10") as $row) {
+						echo "<tr>"; 
+						echo "<td>".$row[0]."</td>"; 
+						echo "<td>".$row[1]."</td>";
+						echo "</tr>"; 
+					}
+					?>
+				</tbody>
+			</table>
+		</div>
+	</div> 
+	<div class="pure-u-3-5">
+		<h2>Game History</h2>
+		<table class="pure-table pure-table-horizontal">
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>Team</th>
+					<th>Score</th>
+					<th>Team</th>
+					<th>Score</th>
+					<th>Winner</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					foreach($dbh->query("select data, team1, team1score, team2, team2score, winner from game where team1='$teamName' or team2='$teamName' order by data desc") as $row) {
+						echo "<tr>";
+						echo "<td>".$row[0]."</td>";
+						echo "<td>".$row[1]."</td>";
+						echo "<td>".$row[2]."</td>";
+						echo "<td>".$row[3]."</td>";
+						echo "<td>".$row[4]."</td>";
+						echo "<td>".$row[5]."</td>"; 
+						echo "</tr>"; 
+					}
+				?>
+			</tbody>
+		</table>
 	</div>
-	<div class="pure-u-1-2">
-		<button type="submit" name="playGame" value="play" class="pure-button pure-button-primary">Play a Game</button>
-	</div>
+	<div class="pure-u-3-20">
+		</br>
+		<div style="margin-left: 1em;">
+			<button type="submit" name="playGame" value="play" class="pure-button pure-button-primary">Play a Game</button>
+		</div>
+	<div> 
 </div>
 
 </html>
