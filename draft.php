@@ -184,6 +184,16 @@
     		}
     	}
 
+		if(isset($_POST["nameG"])){
+			$player = $_POST["nameG"];
+			foreach( $dbh->query("select * from Team where user = '".$username."'") as $rows){
+				//$dbh->query("update Team set goalie = '".$player."' where user = '".$username."' ");
+			    $dbh->query("insert into draftedGoalie values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["penalty"].",".$_POST["minutes"].",".$_POST["goals"].",".$_POST["saves"].",0) ");
+    			$dbh->query("update Team set goalie = '".$player."' where user = '".$username."' ");
+				$dbh->query("update goalieLifetime set drafted = 1 where name = '".$player."' ");
+			}
+		}
+		
     	if(isset($_POST["rm1"])){
     		$player = $_POST["rm1"];
     		$dbh->query("update Team set player1 = NULL where user = '".$username."' ");
@@ -225,11 +235,19 @@
     		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
 			$dbh->query("update playerLifetime set drafted = 0 where name = '".$player."' ");
     	}
+		
+		if(isset($_POST["rm6"])){
+    		$player = $_POST["rm6"];
+    		$dbh->query("update Team set goalie = NULL where user = '".$username."' ");
+    		$dbh->query("delete from draftedGoalie where name = '".$player."' ");
+			$dbh->query("update goalieLifetime set drafted = 0 where name = '".$player."' ");
+    	}
 
     	echo "<table style='width:45% border='1' align='center'>";
     	foreach( $dbh->query("select * from Team where user = '".$username."'") as $rows){
 			echo "<TR bgcolor='#D5D8DC'>";
     		echo "<TH>Players</TH> ";
+			echo "<TH></TH> ";
     		echo "</TR>";
     		if($rows[2] != NULL){
     			echo "<TR>";
@@ -278,10 +296,17 @@
     		}
 			echo "<TR  bgcolor='#D5D8DC'>";
     		echo "<TH>Goalie</TH> ";
+			echo "<TH></TH> ";
     		echo "</TR>";
-    		echo "<TR>";
-    		echo "<TH>" .$rows[7]."</TH> ";
-    		echo "</TR>";
+    		if($rows[7] != NULL){
+    			echo "<TR>";
+    			echo "<TH>" .$rows[7]."</TH> ";
+    			echo '<form action="draft.php" method="post">';
+    			echo '<input type="hidden" name="rm6" value="'.$rows[7].'">';
+    			echo '<TD> <input type="submit" name="select2" value="Remove"> </TD>';
+    			echo '</form>';
+    			echo "</TR>";
+    		}
     		echo "<TR>";
     		echo '</form>';
     		echo "</TR>";
@@ -308,7 +333,7 @@
     	echo "<TH> Goals  </TH>";
     	echo "<TH> Assists  </TH>";
     	echo "<TH> Points  </TH>";
-    	echo "<TH> Penlty Minutes  </TH>";
+    	echo "<TH> Penalty Minutes  </TH>";
     	echo "<TH> </TH>";
     	echo "</TR>";
 
@@ -355,9 +380,9 @@
     	echo "<TH> Saves </TH>";
     	echo "<TH> Minutes in Goal </TH>";
     	echo "<TH> Goals Against </TH>";
-    	echo "<TH> Penlty Minutes </TH>";
+    	echo "<TH> Penalty Minutes </TH>";
     	echo "</TR>";
-
+ 
     	foreach( $dbh->query("select * from goalieLifetime") as $rows){
     		if($rows[9] == 0){
     			echo "<TR>";
@@ -372,6 +397,11 @@
     			echo "<TH>" .$rows[5]."</TH> ";
     			echo '<form action="draft.php" method="post">';
     			echo '<input type="hidden" name="nameG" value="'.$rows[0].'">';
+				echo '<input type="hidden" name="nameT" value="'.$rows[1].'">';
+				echo '<input type="hidden" name="saves" value="'.$rows[8].'">';
+				echo '<input type="hidden" name="minutes" value="'.$rows[6].'">';
+				echo '<input type="hidden" name="goals" value="'.$rows[7].'">';
+				echo '<input type="hidden" name="penalty" value="'.$rows[5].'">';
     			echo '<TD> <input type="submit" name="select2" value="Pick"> </TD>';
     			echo '</form>';
     			echo "</TR>";
