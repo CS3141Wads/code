@@ -32,14 +32,14 @@
 <body>
 
 <div class="header">
-    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed"> 
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
         <a class="pure-menu-heading" href="">Fantasy Broomball</a>
 
         <ul class="pure-menu-list">
-			<li class="pure-menu-item"><a href="profile.php" class="pure-menu-link">Profile</a></li>
-			<li class="pure-menu-item"><a href="draft.php" class="pure-menu-link">Draft</a></li>
-			<li class="pure-menu-item"><a href="game.php" class="pure-menu-link">Gameplay</a></li>
-			<li class="pure-menu-item"><a href="logout.php" class="pure-menu-link">Logout</a></li>
+			<li class="pure-menu-item"><a name="profileB" href="profile.php" class="pure-menu-link">Profile</a></li>
+			<li class="pure-menu-item"><a name="draftB" href="draft.php" class="pure-menu-link">Draft</a></li>
+			<li class="pure-menu-item"><a name="gameB" href="game.php" class="pure-menu-link">Gameplay</a></li>
+			<li class="pure-menu-item"><a name="logoutB" href="logout.php" class="pure-menu-link">Logout</a></li>
         </ul>
     </div>
 </div>
