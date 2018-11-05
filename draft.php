@@ -1,36 +1,20 @@
 <!DOCTYPE html>
+<html lang="en">
 <?php
   session_start();
  ?>
-<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A layout example that shows off a responsive product landing page.">
 	<style>
-    .row {
-      display: flex;
-    }
-
-    .columnLeft {
-      height: 100vh;
-      float: left;
-      width: 35%;
-    }
-
-    .columnRight {
-      height: 100vh;
-      float: left;
-      width: 65%;
-    }
-
     /* Style the tab */
     .tab {
      overflow: hidden;
      border: 1px solid #ccc;
      background-color: #f1f1f1;
     }
-
+	
     /* Style the buttons that are used to open the tab content */
     .tab button {
      background-color: inherit;
@@ -40,18 +24,20 @@
      cursor: pointer;
      padding: 14px 16px;
      transition: 0.3s;
+	 color: #000; 
+	 font-weight: bold; 
     }
-
+	
     /* Change background color of buttons on hover */
     .tab button:hover {
      background-color: #ddd;
     }
-
+	
     /* Create an active/current tablink class */
     .tab button.active {
      background-color: #ccc;
     }
-
+	
     /* Style the tab content */
     .tabcontent {
      display: none;
@@ -61,7 +47,7 @@
      height: 100vh;
      overflow-y: scroll;
     }
-
+	
   	.collapsible {
     	 background-color: #777;
     	  color: white;
@@ -73,36 +59,19 @@
     	  outline: none;
      	 font-size: 15px;
   	}
-
+	
   	.active, .collapsible:hover {
    	   background-color: #555;
   	}
-
+	
   	.content {
       	padding: 0 18px;
       	display: none;
     	overflow: hidden;
   	}
-
+	
   	tr:nth-child(even) {
   	background-color: #f2f2f2;
-  	}
-
-  	th, td {
-     	 text-align: left;
-     	 padding: 8px;
-  	}
-
-  	table {
-    	  border-collapse: collapse;
-    	  width: 100%;
-  	}
-
-  	table  tbody{
-    	display:block;
-    	height:600px;
-    	overflow:auto;
-  	 width: 100%;
   	}
 	</style>
     <title>Draft</title>
@@ -143,14 +112,10 @@
 <h1>Draft Page</h1>
 
 
-<div class="row">
-  <div class="columnLeft">
-	<div style="clear: both">
-	<h2 style="float: left"><u> Team Roster </u></h2>
-	</div>
-
-    <?php
-	
+<div class="pure-g">
+  <div class="pure-u-1-6" style="margin-left: 1em;">
+	<h2>Team Roster</h2>
+		<?php
 		$name = $_SESSION["name"];
         $username = $_SESSION["usernameToLoad"];
 		
@@ -243,173 +208,185 @@
     		$dbh->query("delete from draftedGoalie where name = '".$player."' ");
 			$dbh->query("update goalieLifetime set drafted = 0 where name = '".$player."' ");
     	}
+	
+		echo "<table class='pure-table pure-table-horizontal'>"; 
+			echo "<thead>"; 
+			echo "<tr>";
+				echo "<th>Players</th><th></th>"; 
+			echo "</tr>"; 
+			echo "</thead>"; 
+		echo "<tbody>"; 
 
-    	echo "<table style='width:45% border='1' align='center'>";
-    	foreach( $dbh->query("select * from Team where user = '".$username."'") as $rows){
-			echo "<TR bgcolor='#D5D8DC'>";
-    		echo "<TH>Players</TH> ";
-			echo "<TH></TH> ";
-    		echo "</TR>";
-    		if($rows[2] != NULL){
-    			echo "<TR>";
-    			echo "<TH>" .$rows[2]."</TH> ";
-    			echo '<form action="draft.php" method="post">';
-    			echo '<input type="hidden" name="rm1" value="'.$rows[2].'">';
-    			echo '<TD> <input type="submit" name="select2" value="Remove"> </TD>';
-    			echo '</form>';
-    			echo "</TR>";
-    		}
-    		if($rows[3] != NULL){
-    			echo "<TR>";
-    			echo "<TH>" .$rows[3]."</TH> ";
-    			echo '<form action="draft.php" method="post">';
-    			echo '<input type="hidden" name="rm2" value="'.$rows[3].'">';
-    			echo '<TD> <input type="submit" name="select2" value="Remove"> </TD>';
-    			echo '</form>';
-    			echo "</TR>";
-    		}
-    		if($rows[4] != NULL){
-    			echo "<TR>";
-    			echo "<TH>" .$rows[4]."</TH> ";
-    			echo '<form action="draft.php" method="post">';
-    			echo '<input type="hidden" name="rm3" value="'.$rows[4].'">';
-    			echo '<TD> <input type="submit" name="select2" value="Remove"> </TD>';
-    			echo '</form>';
-    			echo "</TR>";
-    		}
-    		if($rows[5] != NULL){
-    			echo "<TR>";
-    			echo "<TH>" .$rows[5]."</TH> ";
-    			echo '<form action="draft.php" method="post">';
-    			echo '<input type="hidden" name="rm4" value="'.$rows[5].'">';
-    			echo '<TD> <input type="submit" name="select2" value="Remove"> </TD>';
-    			echo '</form>';
-    			echo "</TR>";
-    		}
-    		if($rows[6] != NULL){
-    			echo "<TR>";
-    			echo "<TH>" .$rows[6]."</TH> ";
-    			echo '<form action="draft.php" method="post">';
-    			echo '<input type="hidden" name="rm5" value="'.$rows[6].'">';
-    			echo '<TD> <input type="submit" name="select2" value="Remove"> </TD>';
-    			echo '</form>';
-    			echo "</TR>";
-    		}
-			echo "<TR  bgcolor='#D5D8DC'>";
-    		echo "<TH>Goalie</TH> ";
-			echo "<TH></TH> ";
-    		echo "</TR>";
-    		if($rows[7] != NULL){
-    			echo "<TR>";
-    			echo "<TH>" .$rows[7]."</TH> ";
-    			echo '<form action="draft.php" method="post">';
-    			echo '<input type="hidden" name="rm6" value="'.$rows[7].'">';
-    			echo '<TD> <input type="submit" name="select2" value="Remove"> </TD>';
-    			echo '</form>';
-    			echo "</TR>";
-    		}
-    		echo "<TR>";
-    		echo '</form>';
-    		echo "</TR>";
-    	}
-    	echo "</table>";
-
-    ?>
+		$q = $dbh->query("select player1, player2, player3, player4, player5 from Team where user='$username'"); 
+		$rows = $q->fetch();
+		if($rows[0] != NULL){
+			echo "<tr>";
+			echo "<td>".$rows[0]."</td> ";
+			echo '<form action="draft.php" method="post">';
+			echo '<input type="hidden" name="rm1" value="'.$rows[0].'">';
+			echo '<td> <input type="submit" name="select2" value="Remove"> </td>';
+			echo '</form>';
+			echo "</tr>";
+		}
+		if($rows[1] != NULL){
+			echo "<tr>";
+			echo "<td>".$rows[1]."</td> ";
+			echo '<form action="draft.php" method="post">';
+			echo '<input type="hidden" name="rm2" value="'.$rows[1].'">';
+			echo '<td> <input type="submit" name="select2" value="Remove"> </td>';
+			echo '</form>';
+			echo "</tr>";
+		}
+		if($rows[2] != NULL){
+			echo "<tr>";
+			echo "<td>".$rows[2]."</td> ";
+			echo '<form action="draft.php" method="post">';
+			echo '<input type="hidden" name="rm3" value="'.$rows[2].'">';
+			echo '<td> <input type="submit" name="select2" value="Remove"> </td>';
+			echo '</form>';
+			echo "</tr>";
+		}	
+		if($rows[3] != NULL){
+			echo "<tr>";
+			echo "<td>".$rows[3]."</td> ";
+			echo '<form action="draft.php" method="post">';
+			echo '<input type="hidden" name="rm4" value="'.$rows[3].'">';
+			echo '<td> <input type="submit" name="select2" value="Remove"> </td>';
+			echo '</form>';
+			echo "</tr>";
+		}
+		if($rows[4] != NULL){
+			echo "<tr>";
+			echo "<td>".$rows[4]."</td> ";
+			echo '<form action="draft.php" method="post">';
+			echo '<input type="hidden" name="rm5" value="'.$rows[4].'">';
+			echo '<td> <input type="submit" name="select2" value="Remove"> </td>';
+			echo '</form>';
+			echo "</tr>";
+		}
+		echo "</tbody>"; 
+		echo "<thead>"; 
+			echo "<tr>"; 
+				echo "<th>Goalie</th><th></th>"; 
+			echo "</tr>"; 
+		echo "</thead>"; 
+		echo "<tbody>"; 
+			foreach( $dbh->query("select goalie from Team where user = '".$username."'") as $rows){
+				if($rows[0] != NULL){
+					echo "<tr>";
+					echo "<td>".$rows[0]."</td>";
+					echo '<form action="draft.php" method="post">';
+					echo '<input type="hidden" name="rm6" value="'.$rows[0].'">';
+					echo '<td> <input type="submit" name="select2" value="Remove"> </td>';
+					echo '</form>';
+					echo "</tr>";
+				}
+			}
+		echo "</tbody>";
+		echo "</table>";
+		?>
   </div>
 
-  <div class="columnRight">
+  <div class="pure-u-3-4" style="margin-left: 4em;">
     <div class="tab">
           <button class="tablinks" onclick="openTab(event, 'Players')" id="defaultOpen">Players</button>
           <button class="tablinks" onclick="openTab(event, 'Goalies')">Goalies</button>
     </div>
-     <div id="Players" class="tabcontent">
-    <?php
-    	echo "<table style='width:45% border='1' align='center'>";
-    	echo "<TR>";
-    	echo "<TH> Player Name </TH> ";
-    	echo "<TH> Team Name </TH>";
-    	echo "<TH> Wins  </TH>";
-    	echo "<TH> Losses  </TH>";
-    	echo "<TH> Ties  </TH>";
-    	echo "<TH> Goals  </TH>";
-    	echo "<TH> Assists  </TH>";
-    	echo "<TH> Points  </TH>";
-    	echo "<TH> Penalty Minutes  </TH>";
-    	echo "<TH> </TH>";
-    	echo "</TR>";
-
-    	foreach( $dbh->query("select * from playerLifetime") as $rows){
-    		if($rows[9] == 0){
-    			echo "<TR>";
-    			echo "<TH>" .$rows[0]."</TH> ";
-    			echo "<TH>" .$rows[1]."</TH> ";
-    			echo "<TH>" .$rows[2]."</TH> ";
-    			echo "<TH>" .$rows[3]."</TH> ";
-    			echo "<TH>" .$rows[4]."</TH> ";
-    			echo "<TH>" .$rows[5]."</TH> ";
-    			echo "<TH>" .$rows[6]."</TH> ";
-    			echo "<TH>" .$rows[7]."</TH> ";
-    			echo "<TH>" .$rows[8]."</TH> ";
-    			echo '<form action="draft.php" method="post">';
-    			echo '<input type="hidden" name="nameP" value="'.$rows[0].'">';
-				echo '<input type="hidden" name="nameT" value="'.$rows[1].'">';
-				echo '<input type="hidden" name="goals" value="'.$rows[5].'">';
-				echo '<input type="hidden" name="assists" value="'.$rows[6].'">';
-				echo '<input type="hidden" name="points" value="'.$rows[7].'">';
-				echo '<input type="hidden" name="penalty" value="'.$rows[8].'">';
-    			echo '<TD> <input type="submit" name="select2" value="Pick"> </TD>';
-    			echo '</form>';
-    			echo "</TR>";
-    		}
-    	}
-    	echo "</table>";
-    ?>
+    <div id="Players" class="tabcontent">
+	    <?php
+		echo "<table class='pure-table pure-table-horizontal'>"; 
+			echo "<thead>";
+				echo "<tr>"; 
+					echo "<th>Player Name</th>";
+					echo "<th>Team Name</th>";
+					echo "<th>Wins</th>";
+					echo "<th>Losses</th>";
+					echo "<th>Ties</th>"; 
+					echo "<th>Goals</th>"; 
+					echo "<th>Assists</th>"; 
+					echo "<th>Points</th>"; 
+					echo "<th>Penalty Min</th>"; 
+					echo "<th></th>"; 
+				echo "</tr>"; 
+			echo "</thead>"; 
+			echo "<tbody>"; 
+			
+			foreach( $dbh->query("select * from playerLifetime") as $rows){
+				if($rows[9] == 0){
+					echo "<tr>";
+					echo "<td>".$rows[0]."</td>";
+					echo "<td>".$rows[1]."</td>";
+					echo "<td>".$rows[2]."</td>";
+					echo "<td>".$rows[3]."</td>";
+					echo "<td>".$rows[4]."</td>";
+					echo "<td>".$rows[5]."</td>";
+					echo "<td>".$rows[6]."</td>";
+					echo "<td>".$rows[7]."</td>";
+					echo "<td>".$rows[8]."</td>";
+					echo '<form action="draft.php" method="post">';
+						echo '<input type="hidden" name="nameP" value="'.$rows[0].'">';
+						echo '<input type="hidden" name="nameT" value="'.$rows[1].'">';
+						echo '<input type="hidden" name="goals" value="'.$rows[5].'">';
+						echo '<input type="hidden" name="assists" value="'.$rows[6].'">';
+						echo '<input type="hidden" name="points" value="'.$rows[7].'">';
+						echo '<input type="hidden" name="penalty" value="'.$rows[8].'">';
+						echo '<td><input type="submit" name="select2" value="Pick"></td>';
+					echo '</form>';
+					echo "</tr>";
+				}
+			}
+			echo "</tbody>"; 
+		echo "</table>";
+		?>
     </div>
 
-     <div id="Goalies" class="tabcontent">
-    <!--<button class="collapsible">Open Goalies</button>
+    <div id="Goalies" class="tabcontent">
+	 <!--<button class="collapsible">Open Goalies</button>
     <div class="content">-->
-    <?php
-    	//echo "<h1>Goalie</h1>";
-    	echo "<table style='width:45% border='1' align='center'>";
-    	echo "<TR>";
-    	echo "<TH> Goalie Name </TH> ";
-    	echo "<TH> Team Name </TH>";
-    	echo "<TH> Wins </TH>";
-    	echo "<TH> Losses </TH>";
-    	echo "<TH> Ties </TH>";
-    	echo "<TH> Saves </TH>";
-    	echo "<TH> Minutes in Goal </TH>";
-    	echo "<TH> Goals Against </TH>";
-    	echo "<TH> Penalty Minutes </TH>";
-    	echo "</TR>";
- 
-    	foreach( $dbh->query("select * from goalieLifetime") as $rows){
-    		if($rows[9] == 0){
-    			echo "<TR>";
-    			echo "<TH>" .$rows[0]."</TH> ";
-    			echo "<TH>" .$rows[1]."</TH> ";
-    			echo "<TH>" .$rows[2]."</TH> ";
-    			echo "<TH>" .$rows[3]."</TH> ";
-    			echo "<TH>" .$rows[4]."</TH> ";
-    			echo "<TH>" .$rows[8]."</TH> ";
-    			echo "<TH>" .$rows[6]."</TH> ";
-    			echo "<TH>" .$rows[7]."</TH> ";
-    			echo "<TH>" .$rows[5]."</TH> ";
-    			echo '<form action="draft.php" method="post">';
-    			echo '<input type="hidden" name="nameG" value="'.$rows[0].'">';
-				echo '<input type="hidden" name="nameT" value="'.$rows[1].'">';
-				echo '<input type="hidden" name="saves" value="'.$rows[8].'">';
-				echo '<input type="hidden" name="minutes" value="'.$rows[6].'">';
-				echo '<input type="hidden" name="goals" value="'.$rows[7].'">';
-				echo '<input type="hidden" name="penalty" value="'.$rows[5].'">';
-    			echo '<TD> <input type="submit" name="select2" value="Pick"> </TD>';
-    			echo '</form>';
-    			echo "</TR>";
-    		}
-    	}
-    	echo "</table>";
-    ?>
+		<?php
+		echo "<table class='pure-table pure-table-horizontal'>"; 
+			echo "<thead>"; 
+				echo "<tr>"; 
+					echo "<th>Player Name</th>"; 
+					echo "<th>Team Name</th>"; 
+					echo "<th>Wins</th>"; 
+					echo "<th>Losses</th>"; 
+					echo "<th>Ties</th>"; 
+					echo "<th>Goals</th>"; 
+					echo "<th>Assists</th>"; 
+					echo "<th>Points</th>"; 
+					echo "<th>Penalty Min</th>"; 
+					echo "<th></th>"; 
+				echo "</tr>"; 
+			echo "</thead>"; 
+			echo "<tbody>"; 
+				foreach( $dbh->query("select * from goalieLifetime") as $rows){
+					if($rows[9] == 0){
+						echo "<tr>";
+						echo "<td>".$rows[0]."</td>";
+						echo "<td>".$rows[1]."</td>";
+						echo "<td>".$rows[2]."</td>";
+						echo "<td>".$rows[3]."</td>";
+						echo "<td>".$rows[4]."</td>";
+						echo "<td>".$rows[8]."</td>";
+						echo "<td>".$rows[6]."</td>";
+						echo "<td>".$rows[7]."</td>";
+						echo "<td>".$rows[5]."</td>";
+						echo '<form action="draft.php" method="post">';
+							echo '<input type="hidden" name="nameG" value="'.$rows[0].'">';
+							echo '<input type="hidden" name="nameT" value="'.$rows[1].'">';
+							echo '<input type="hidden" name="saves" value="'.$rows[8].'">';
+							echo '<input type="hidden" name="minutes" value="'.$rows[6].'">';
+							echo '<input type="hidden" name="goals" value="'.$rows[7].'">';
+							echo '<input type="hidden" name="penalty" value="'.$rows[5].'">';
+							echo '<td><input type="submit" name="select2" value="Pick"></td>';
+						echo '</form>';
+						echo "</tr>";
+					}
+				}
+			echo "</tbody>";
+		echo "</table>"; 
+		?>
     </div>
   </div>
 </div>
