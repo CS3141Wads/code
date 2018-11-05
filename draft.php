@@ -24,13 +24,8 @@
      cursor: pointer;
      padding: 14px 16px;
      transition: 0.3s;
-	 color: #000; 
+	 color: #2D3E50; 
 	 font-weight: bold; 
-    }
-	
-    /* Change background color of buttons on hover */
-    .tab button:hover {
-     background-color: #ddd;
     }
 	
     /* Create an active/current tablink class */
@@ -54,7 +49,7 @@
     	  cursor: pointer;
     	  padding: 18px;
     	  width: 100%;
-    	 border: none;
+    	  border: none;
     	  text-align: left;
     	  outline: none;
      	 font-size: 15px;
@@ -110,7 +105,6 @@
 </div>
 
 <h1>Draft Page</h1>
-
 
 <div class="pure-g">
   <div class="pure-u-1-6" style="margin-left: 1em;">
