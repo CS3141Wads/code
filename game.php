@@ -70,8 +70,8 @@
 				
 					foreach($dbh->query("select name, score from Team order by score desc limit 10") as $row) {
 						echo "<tr>"; 
-						echo "<td>".$row[0]."</td>"; 
-						echo "<td>".$row[1]."</td>";
+						echo "<td name='t1'>".$row[0]."</td>"; 
+						echo "<td name='s1'>".$row[1]."</td>";
 						echo "</tr>"; 
 					}
 					?>
@@ -96,12 +96,12 @@
 				<?php
 					foreach($dbh->query("select data, team1, team1score, team2, team2score, winner from game where team1='$teamName' or team2='$teamName' order by data desc") as $row) {
 						echo "<tr>";
-						echo "<td>".$row[0]."</td>";
+						echo "<td name='date'>".$row[0]."</td>";
 						echo "<td>".$row[1]."</td>";
 						echo "<td>".$row[2]."</td>";
 						echo "<td>".$row[3]."</td>";
 						echo "<td>".$row[4]."</td>";
-						echo "<td>".$row[5]."</td>"; 
+						echo "<td name='win'>".$row[5]."</td>"; 
 						echo "</tr>"; 
 					}
 				?>

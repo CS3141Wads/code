@@ -215,46 +215,46 @@
 		$rows = $q->fetch();
 		if($rows[0] != NULL){
 			echo "<tr>";
-			echo "<td>".$rows[0]."</td> ";
+			echo "<td name='rm1'>".$rows[0]."</td> ";
 			echo '<form action="draft.php" method="post">';
 			echo '<input type="hidden" name="rm1" value="'.$rows[0].'">';
-			echo '<td> <input type="submit" name="select2" value="Remove"> </td>';
+			echo '<td> <input type="submit" name="rem1" value="Remove"> </td>';
 			echo '</form>';
 			echo "</tr>";
 		}
 		if($rows[1] != NULL){
 			echo "<tr>";
-			echo "<td>".$rows[1]."</td> ";
+			echo "<td name='rm2'>".$rows[1]."</td> ";
 			echo '<form action="draft.php" method="post">';
 			echo '<input type="hidden" name="rm2" value="'.$rows[1].'">';
-			echo '<td> <input type="submit" name="select2" value="Remove"> </td>';
+			echo '<td> <input type="submit" name="rem2" value="Remove"> </td>';
 			echo '</form>';
 			echo "</tr>";
 		}
 		if($rows[2] != NULL){
 			echo "<tr>";
-			echo "<td>".$rows[2]."</td> ";
+			echo "<td name='rm3'>".$rows[2]."</td> ";
 			echo '<form action="draft.php" method="post">';
 			echo '<input type="hidden" name="rm3" value="'.$rows[2].'">';
-			echo '<td> <input type="submit" name="select2" value="Remove"> </td>';
+			echo '<td> <input type="submit" name="rem3" value="Remove"> </td>';
 			echo '</form>';
 			echo "</tr>";
 		}	
 		if($rows[3] != NULL){
 			echo "<tr>";
-			echo "<td>".$rows[3]."</td> ";
+			echo "<td name='rm4'>".$rows[3]."</td> ";
 			echo '<form action="draft.php" method="post">';
 			echo '<input type="hidden" name="rm4" value="'.$rows[3].'">';
-			echo '<td> <input type="submit" name="select2" value="Remove"> </td>';
+			echo '<td> <input type="submit" name="rem4" value="Remove"> </td>';
 			echo '</form>';
 			echo "</tr>";
 		}
 		if($rows[4] != NULL){
 			echo "<tr>";
-			echo "<td>".$rows[4]."</td> ";
+			echo "<td name='rm5'>".$rows[4]."</td> ";
 			echo '<form action="draft.php" method="post">';
 			echo '<input type="hidden" name="rm5" value="'.$rows[4].'">';
-			echo '<td> <input type="submit" name="select2" value="Remove"> </td>';
+			echo '<td> <input type="submit" name="rem5" value="Remove"> </td>';
 			echo '</form>';
 			echo "</tr>";
 		}
@@ -268,10 +268,10 @@
 			foreach( $dbh->query("select goalie from Team where user = '".$username."'") as $rows){
 				if($rows[0] != NULL){
 					echo "<tr>";
-					echo "<td>".$rows[0]."</td>";
+					echo "<td name='rm6'>".$rows[0]."</td>";
 					echo '<form action="draft.php" method="post">';
 					echo '<input type="hidden" name="rm6" value="'.$rows[0].'">';
-					echo '<td> <input type="submit" name="select2" value="Remove"> </td>';
+					echo '<td> <input type="submit" name="rem6" value="Remove"> </td>';
 					echo '</form>';
 					echo "</tr>";
 				}
@@ -284,7 +284,7 @@
   <div class="pure-u-3-4" style="margin-left: 4em;">
     <div class="tab">
           <button class="tablinks" onclick="openTab(event, 'Players')" id="defaultOpen">Players</button>
-          <button class="tablinks" onclick="openTab(event, 'Goalies')">Goalies</button>
+          <button name='goal' class="tablinks" onclick="openTab(event, 'Goalies')">Goalies</button>
     </div>
     <div id="Players" class="tabcontent">
 	    <?php
