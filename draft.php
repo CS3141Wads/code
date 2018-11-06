@@ -414,7 +414,7 @@ th<!DOCTYPE html>
     <div class="content">-->
     <?php
     	//echo "<h1>Goalie</h1>";
-    	echo '<table id="table_id" class="display">';
+    	echo '<table id="table_id2" class="display">';
     	 echo'<thead>';
         echo '<tr>';
          echo "<th> Goalie Name </th>";
@@ -487,6 +487,7 @@ for (i = 0; i < coll.length; i++) {
 <script>
     $(document).ready( function () {
       $('#table_id').DataTable();
+      $('#table_id2').DataTable();
     } );
 
     document.getElementById("defaultOpen").click();
