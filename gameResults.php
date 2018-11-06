@@ -47,71 +47,73 @@
 </br></br>
 
 <div class="pure-g">
-	<div class="pure-u-1-2" style="margin-left: 1em;"> 
-		<h2>Player Results</h2>
-		<table class="pure-table pure-table-horizontal">
-			<thead>
-				<tr>
-					<th>Player</th>
-					<th>Goals</th>
-					<th>Assists</th>
-					<th>Points</th>
-					<th>Penalty Min</th>
-					<th>Score</th>
-				</tr>
-			</thead>
-			<tbody>
-			<?php
-				$name = $_SESSION["name"];
-				$username = $_SESSION["usernameToLoad"];
-				$teamName = $_SESSION["teamName"];
+	<div class="pure-u-1-2">
+		<div style="margin-left: 1em;">
+			<h2>Player Results</h2>
+			<table class="pure-table pure-table-horizontal">
+				<thead>
+					<tr>
+						<th>Player</th>
+						<th>Goals</th>
+						<th>Assists</th>
+						<th>Points</th>
+						<th>Penalty Min</th>
+						<th>Score</th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php
+					$name = $_SESSION["name"];
+					$username = $_SESSION["usernameToLoad"];
+					$teamName = $_SESSION["teamName"];
 
-				$config = parse_ini_file("db.ini");
-				$dbh = new PDO($config['dsn'], $config['username'], $config['password']);
-				$dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+					$config = parse_ini_file("db.ini");
+					$dbh = new PDO($config['dsn'], $config['username'], $config['password']);
+					$dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 			
-				foreach ($dbh->query("select d.name, d.goals, d.assists, d.points, d.penaltyMinutes, d.currentScore 
+					foreach ($dbh->query("select d.name, d.goals, d.assists, d.points, d.penaltyMinutes, d.currentScore 
 									  from draftedPlayer as d, User where d.draftedTeam = User.teamName and User.username = '".$username."'") as $row ) {
-					echo "<tr>"; 
-					echo "<td name='pn'>".$row[0]."</td>"; 
-					echo "<td name='go'>".$row[1]."</td>";
-					echo "<td name='as'>".$row[2]."</td>";
-					echo "<td name='po'>".$row[3]."</td>";
-					echo "<td name='pm'>".$row[4]."</td>";
-					echo "<td name='cs'>".$row[5]."</td>";
-					echo "</tr>"; 					  
-				}
-			?>
-			</tbody>
-		</table></br>
+						echo "<tr>"; 
+						echo "<td name='pn'>".$row[0]."</td>"; 
+						echo "<td name='go'>".$row[1]."</td>";
+						echo "<td name='as'>".$row[2]."</td>";
+						echo "<td name='po'>".$row[3]."</td>";
+						echo "<td name='pm'>".$row[4]."</td>";
+						echo "<td name='cs'>".$row[5]."</td>";
+						echo "</tr>"; 					  
+					}
+				?>
+				</tbody>
+			</table></br>
 
-		<table class="pure-table pure-table-horizontal">
-			<thead>
-				<tr>
-					<th>Goalie</th>
-					<th>Penalty Min</th>
-					<th>Goalie Min</th>
-					<th>Goals Against</th>
-					<th>Saves</th>
-					<th>Score</th>
-				</tr>
-			</thead>
-			<tbody>
-			<?php
-				foreach($dbh->query("select d.name, d.penaltyMinutes, d.goalieMinutes, d.goalsAgainst, d.saves, d.currentScore 
+			<table class="pure-table pure-table-horizontal">
+				<thead>
+					<tr>
+						<th>Goalie</th>
+						<th>Penalty Min</th>
+						<th>Goalie Min</th>
+						<th>Goals Against</th>
+						<th>Saves</th>
+						<th>Score</th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php
+					foreach($dbh->query("select d.name, d.penaltyMinutes, d.goalieMinutes, d.goalsAgainst, d.saves, d.currentScore 
 									 from draftedGoalie as d, User where d.draftedTeam = User.teamName and User.userName = '".$username."'") as $row ) {
-					echo "<tr>"; 
-					echo "<td name='gn'>".$row[0]."</td>"; 
-					echo "<td name='pm'>".$row[1]."</td>";
-					echo "<td name='gm'>".$row[2]."</td>";
-					echo "<td name='ga'>".$row[3]."</td>";
-					echo "<td name='sa'>".$row[4]."</td>";
-					echo "<td name='cs'>".$row[5]."</td>";
-					echo "</tr>"; 					  
-				}
-			?>
-			</tbody>
-		</table>
+						echo "<tr>"; 
+						echo "<td name='gn'>".$row[0]."</td>"; 
+						echo "<td name='pm'>".$row[1]."</td>";
+						echo "<td name='gm'>".$row[2]."</td>";
+						echo "<td name='ga'>".$row[3]."</td>";
+						echo "<td name='sa'>".$row[4]."</td>";
+						echo "<td name='cs'>".$row[5]."</td>";
+						echo "</tr>"; 					  
+					}
+				?>
+				</tbody>
+			</table>
+		</div>
 	</div>
 	<div class="pure-u-1-2">
 		<h2>Game Results</h2>
@@ -141,6 +143,13 @@
 		</table>
 	</div>
 </div> 
+
+
+
+
+
+
+
 
 </html>
 
