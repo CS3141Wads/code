@@ -111,7 +111,9 @@
 	<div class="pure-u-3-20">
 		</br>
 		<div style="margin-left: 1em;">
-			<button type="submit" name="playGame" value="play" class="pure-button pure-button-primary">Play a Game</button>
+			<form action="gameResults.php" method="post">
+				<button type="submit" name="playGame" value="play" class="pure-button pure-button-primary">Play a Game</button>
+			</form>
 		</div>
 	<div> 
 </div>
