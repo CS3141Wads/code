@@ -1,4 +1,4 @@
-th<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <?php
   session_start();
@@ -8,6 +8,10 @@ th<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A layout example that shows off a responsive product landing page.">
 	<style>
+	html {
+		overflow-y: hidden; 
+	}
+	
     /* Style the tab */
     .tab {
      overflow: hidden;
@@ -124,12 +128,6 @@ th<!DOCTYPE html>
 </div>
 
 <h1>Draft Page</h1>
-
-<div class="row">
-  <div class="columnLeft">
-	<div style="clear: both">
-	<h2 style="float: left"><u> Team Roster </u></h2>
-	</div>
 
 <div class="pure-g">
   <div class="pure-u-1-6" style="margin-left: 1em;">
@@ -306,30 +304,27 @@ th<!DOCTYPE html>
 		echo "</table>";
 		?>
   </div>
-</div>
-</div>
 
-<div class="columnRight">
-  <div class="pure-u-3-4" style="margin-left: 4em;">
+<div class="pure-u-3-4" style="margin-left: 3em;">
     <div class="tab">
           <button class="tablinks" onclick="openTab(event, 'Players')" id="defaultOpen">Players</button>
           <button name='goal' class="tablinks" onclick="openTab(event, 'Goalies')">Goalies</button>
     </div>
 
-     <div id="Players" class="tabcontent">
+    <div id="Players" class="tabcontent">
     <?php
       echo '<table id="table_id" class="display">';
         echo '<thead>';
           echo '<tr>';
-            echo "<th> Player Name </th> ";
-            echo "<th> Team Name </th>";
-            echo "<th> Wins  </th>";
-            echo "<th> Losses  </th>";
-            echo "<th> Ties  </th>";
-            echo "<th> Goals  </th>";
-            echo "<th> Assists  </th>";
-            echo "<th> Points  </th>";
-            echo "<th> Penalty Minutes  </th>";
+            echo "<th>Player</th> ";
+            echo "<th>Team</th>";
+            echo "<th>Wins</th>";
+            echo "<th>Losses</th>";
+            echo "<th>Ties</th>";
+            echo "<th>Goals</th>";
+            echo "<th>Assists</th>";
+            echo "<th>Points</th>";
+            echo "<th>Penalty Min</th>";
             echo "<th> </th>";
           echo '</tr>';
         echo '</thead>';
@@ -341,15 +336,15 @@ th<!DOCTYPE html>
               if($rows[9] == 0){
                 //echo "<td>";
                 echo "<tr>";
-                echo "<td>" .$rows[0]."</td> ";
-                echo "<td>" .$rows[1]."</td> ";
-                echo "<td>" .$rows[2]."</td> ";
-                echo "<td>" .$rows[3]."</td> ";
-                echo "<td>" .$rows[4]."</td> ";
-                echo "<td>" .$rows[5]."</td> ";
-                echo "<td>" .$rows[6]."</td> ";
-                echo "<td>" .$rows[7]."</td> ";
-                echo "<td>" .$rows[8]."</td> ";
+                echo "<td>".$rows[0]."</td> ";
+                echo "<td>".$rows[1]."</td> ";
+                echo "<td>".$rows[2]."</td> ";
+                echo "<td>".$rows[3]."</td> ";
+                echo "<td>".$rows[4]."</td> ";
+                echo "<td>".$rows[5]."</td> ";
+                echo "<td>".$rows[6]."</td> ";
+                echo "<td>".$rows[7]."</td> ";
+                echo "<td>".$rows[8]."</td> ";
                 echo '<form action="draft.php" method="post">';
                   echo '<input type="hidden" name="nameP" value="'.$rows[0].'">';
                   echo '<input type="hidden" name="nameT" value="'.$rows[1].'">';
@@ -367,85 +362,40 @@ th<!DOCTYPE html>
       ?>
     </div>
 
-    	<!-- echo "<table style='width:45% border='1' align='center'>";
-    	echo "<TR>";
-    	echo "<TH> Player Name </TH> ";
-    	echo "<TH> Team Name </TH>";
-    	echo "<TH> Wins  </TH>";
-    	echo "<TH> Losses  </TH>";
-    	echo "<TH> Ties  </TH>";
-    	echo "<TH> Goals  </TH>";
-    	echo "<TH> Assists  </TH>";
-    	echo "<TH> Points  </TH>";
-    	echo "<TH> Penalty Minutes  </TH>";
-    	echo "<TH> </TH>";
-    	echo "</TR>";
-
-    	foreach( $dbh->query("select * from playerLifetime") as $rows){
-    		if($rows[9] == 0){
-    			echo "<TR>";
-    			echo "<TH>" .$rows[0]."</TH> ";
-    			echo "<TH>" .$rows[1]."</TH> ";
-    			echo "<TH>" .$rows[2]."</TH> ";
-    			echo "<TH>" .$rows[3]."</TH> ";
-    			echo "<TH>" .$rows[4]."</TH> ";
-    			echo "<TH>" .$rows[5]."</TH> ";
-    			echo "<TH>" .$rows[6]."</TH> ";
-    			echo "<TH>" .$rows[7]."</TH> ";
-    			echo "<TH>" .$rows[8]."</TH> ";
-    			echo '<form action="draft.php" method="post">';
-    			  echo '<input type="hidden" name="nameP" value="'.$rows[0].'">';
-    				echo '<input type="hidden" name="nameT" value="'.$rows[1].'">';
-    				echo '<input type="hidden" name="goals" value="'.$rows[5].'">';
-    				echo '<input type="hidden" name="assists" value="'.$rows[6].'">';
-    				echo '<input type="hidden" name="points" value="'.$rows[7].'">';
-    				echo '<input type="hidden" name="penalty" value="'.$rows[8].'">';
-    			echo '<TD> <input type="submit" name="select2" value="Pick"> </TD>';
-    			echo '</form>';
-    			echo "</TR>";
-    		}
-    	}
-    	echo "</table>";
-    ?>
-    </div> -->
-
     <div id="Goalies" class="tabcontent">
 	 <!--<button class="collapsible">Open Goalies</button>
     <div class="content">-->
     <?php
-    	//echo "<h1>Goalie</h1>";
     	echo '<table id="table_id2" class="display">';
-    	 echo'<thead>';
-        echo '<tr>';
-         echo "<th> Goalie Name </th>";
-         echo "<th> Team Name </th>";
-         echo "<th> Wins </th>";
-         echo "<th> Losses </th>";
-         echo "<th> Ties </th>";
-         echo "<th> Saves </th>";
-         echo "<th> Minutes in Goal </th>";
-         echo "<th> Goals Against </th>";
-         echo "<th> Penalty Minutes </th>";
-         echo "<th> </th>";
-        echo '</tr>';
-      echo '</thead>';
+			echo'<thead>';
+				echo '<tr>';
+					echo "<th>Goalie</th>";
+					echo "<th>Team</th>";
+					echo "<th>Wins</th>";
+					echo "<th>Losses</th>";
+					echo "<th>Ties</th>";
+					echo "<th>Saves</th>";
+					echo "<th>Min in Goal</th>";
+					echo "<th>Goals Against</th>";
+					echo "<th>Penalty Min</th>";
+					echo "<th> </th>";
+				echo '</tr>';
+			echo '</thead>';
 
       echo '<tbody>';
 
     	foreach( $dbh->query("select * from goalieLifetime") as $rows){
-        //echo '<tr>';
     		if($rows[9] == 0){
-          //echo "<td>";
     			echo "<tr>";
-    			echo "<td>" .$rows[0]."</td> ";
-    			echo "<td>" .$rows[1]."</td> ";
-    			echo "<td>" .$rows[2]."</td> ";
-    			echo "<td>" .$rows[3]."</td> ";
-    			echo "<td>" .$rows[4]."</td> ";
-    			echo "<td>" .$rows[8]."</td> ";
-    			echo "<td>" .$rows[6]."</td> ";
-    			echo "<td>" .$rows[7]."</td> ";
-    			echo "<td>" .$rows[5]."</td> ";
+    			echo "<td>".$rows[0]."</td> ";
+    			echo "<td>".$rows[1]."</td> ";
+    			echo "<td>".$rows[2]."</td> ";
+    			echo "<td>".$rows[3]."</td> ";
+    			echo "<td>".$rows[4]."</td> ";
+    			echo "<td>".$rows[8]."</td> ";
+    			echo "<td>".$rows[6]."</td> ";
+    			echo "<td>".$rows[7]."</td> ";
+    			echo "<td>".$rows[5]."</td> ";
     			echo '<form action="draft.php" method="post">';
       			echo '<input type="hidden" name="nameG" value="'.$rows[0].'">';
   				  echo '<input type="hidden" name="nameT" value="'.$rows[1].'">';
@@ -462,9 +412,7 @@ th<!DOCTYPE html>
     echo '</table>';
     ?>
   </div>
-
-    </div>
-  </div>
+</div>
 </div>
 
 <!--<script>
