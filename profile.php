@@ -34,9 +34,10 @@
         <a class="pure-menu-heading" href="">Fantasy Broomball</a>
 
         <ul class="pure-menu-list">
-			<li class="pure-menu-item"><a href="profile.php" class="pure-menu-link">Profile</a></li>
-			<li class="pure-menu-item"><a href="draft.php" class="pure-menu-link">Draft</a></li>
-			<li class="pure-menu-item"><a href="logout.php" class="pure-menu-link">Logout</a></li>
+			<li class="pure-menu-item"><a name="profileB" href="profile.php" class="pure-menu-link">Profile</a></li>
+			<li class="pure-menu-item"><a name="draftB" href="draft.php" class="pure-menu-link">Draft</a></li>
+			<li class="pure-menu-item"><a name="gameB" href="game.php" class="pure-menu-link">Gameplay</a></li>
+			<li class="pure-menu-item"><a name="logoutB" href="logout.php" class="pure-menu-link">Logout</a></li>
         </ul>
     </div>
 </div>
@@ -71,10 +72,27 @@
 
       <font name="owner" size="5"><u>Team Owner:</u> <?php echo $name?></font></br></br>
 
-       <font size="5"><u>Current Record:</u></font></br>
-        <font name="wins" size="5">&nbsp;&nbsp;&nbsp;<?php echo $wins?> wins</font></br>
-        <font name="losses" size="5">&nbsp;&nbsp;&nbsp;<?php echo $losses?> losses</font></br>
-        <font name="ties" size="5">&nbsp;&nbsp;&nbsp;<?php echo $ties?> ties</font></br></br>
+              <table class="pure-table pure-table-horizontal">
+                        <thead>
+                                <tr>
+                                        <th>Wins</th>
+                                        <th>Losses</th>
+                                        <th>Ties</th>
+                                </tr>
+                                </thead>
+                        <tbody>
+                                <?php
+                                        foreach($dbh->query("SELECT * FROM Team WHERE user = '$username' AND name = '$teamName'") as $row) {
+                                                echo "<tr>";
+                                                echo "<td>".$row[8]."</td>";
+                                                echo "<td>".$row[9]."</td>";
+                                                echo "<td>".$row[10]."</td>";
+                                                echo "</tr>";
+                                        }
+                                ?>
+                        </tbody>
+               </table>
+	      </br>
 
       <font size="5"><u>Current Roster:</u></font></br>
         <?php
