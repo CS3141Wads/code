@@ -70,7 +70,9 @@
 
       <h1 name="teamName" align="center"><?php echo $teamName?></h3>
 
-      <font name="owner" size="5"><u>Team Owner:</u> <?php echo $name?></font></br></br>
+      <h2 name="owner" align="center">Team Owner: <?php echo $name?></h2>
+
+      <h2>Current Record:</h2>
 
               <table class="pure-table pure-table-horizontal">
                         <thead>
@@ -87,24 +89,41 @@
                                                 echo "<td>".$row[8]."</td>";
                                                 echo "<td>".$row[9]."</td>";
                                                 echo "<td>".$row[10]."</td>";
-                                                echo "</tr>";
+			                        echo "</tr>";
                                         }
                                 ?>
                         </tbody>
                </table>
 	      </br>
 
-      <font size="5"><u>Current Roster:</u></font></br>
-        <?php
-          $dbh->beginTransaction();
-          foreach($dbh->query("SELECT * FROM draftedPlayer where name = '$player1' or name = '$player2' or name = '$player3' or name = '$player4' or name = '$player5'") as $row) {
-            echo "Player: $row[0]<br>";
-          }
+	      <h2>Current Roster:</h2>
 
-          foreach($dbh->query("SELECT * FROM draftedGoalie where name = '$goalie'") as $row) {
-            echo "Goalie: $row[0]<br>";
-          }
-         ?>
+	      <table class="pure-table pure-table-horizontal">
+                        <thead>
+                                <tr>
+                                        <th>Player</th>
+                                        <th> </th>
+                                        <th> </th>
+					<th> </th>
+                                        <th> </th>
+					<th>Goalie</th>
+                                </tr>
+                                </thead>
+                        <tbody>
+                          <?php
+                                        foreach($dbh->query("SELECT * FROM Team WHERE user = '$username' AND name = '$teamName'") as $row) {
+                                                echo "<tr>";
+                                                echo "<td>".$row[2]."</td>";
+                                                echo "<td>".$row[3]."</td>";
+                                                echo "<td>".$row[4]."</td>";
+                                                echo "<td>".$row[5]."</td>";
+                                                echo "<td>".$row[6]."</td>";
+                                                echo "<td>".$row[7]."</td>";
+                                                echo "</tr>";
+                                        }
+                                ?>
+                        </tbody>
+               </table>
 
    </body>
 
