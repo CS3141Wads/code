@@ -160,7 +160,7 @@
     				$dbh->query("insert into draftedPlayer values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["goals"].",".$_POST["assists"].",".$_POST["points"].",".$_POST["penalty"].",0) ");
     				$dbh->query("update Team set player5 = '".$player."' where user = '".$username."' ");
 					$dbh->query("update playerLifetime set drafted = 1 where name = '".$player."' ");
-    			}
+    			} 
     		}
     	}
 
@@ -168,9 +168,11 @@
 			$player = $_POST["nameG"];
 			foreach( $dbh->query("select * from Team where user = '".$username."'") as $rows){
 				//$dbh->query("update Team set goalie = '".$player."' where user = '".$username."' ");
-			    $dbh->query("insert into draftedGoalie values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["penalty"].",".$_POST["minutes"].",".$_POST["goals"].",".$_POST["saves"].",0) ");
-    			$dbh->query("update Team set goalie = '".$player."' where user = '".$username."' ");
-				$dbh->query("update goalieLifetime set drafted = 1 where name = '".$player."' ");
+				if($rows[7] == NULL){
+					$dbh->query("insert into draftedGoalie values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["penalty"].",".$_POST["minutes"].",".$_POST["goals"].",".$_POST["saves"].",0) ");
+					$dbh->query("update Team set goalie = '".$player."' where user = '".$username."' ");
+					$dbh->query("update goalieLifetime set drafted = 1 where name = '".$player."' ");
+				}
 			}
 		}
 
