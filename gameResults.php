@@ -65,8 +65,8 @@ $team2score = $row[3];
 	<div class="pure-u-1-2">
 		<div style="margin-left: 1em;">
 			<?php
-				echo "<h2>".$team1."</h2>"; 
-				echo "<h3>Score: ".$team1score."</h3>"; 
+				echo "<h2 name='t1'>".$team1."</h2>"; 
+				echo "<h3 name='s1'>Score: ".$team1score."</h3>"; 
 			?>
 			<table class="pure-table pure-table-horizontal">
 				<thead>
@@ -126,8 +126,8 @@ $team2score = $row[3];
 	
 	<div class="pure-u-1-2">
 		<?php
-			echo "<h2>".$team2."</h2>"; 
-			echo "<h3>Score: ".$team2score."</h3>"; 
+			echo "<h2 name='t2'>".$team2."</h2>"; 
+			echo "<h3 name='s2'>Score: ".$team2score."</h3>"; 
 		?>
 		<table class="pure-table pure-table-horizontal">
 			<thead>
@@ -144,12 +144,12 @@ $team2score = $row[3];
 				<?php
 					foreach ($dbh->query("select name, goals, assists, points, penaltyMinutes, currentScore from draftedPlayer where draftedTeam = '".$team2."'") as $row ) {
 						echo "<tr>"; 
-						echo "<td name='pn'>".$row[0]."</td>"; 
-						echo "<td name='go'>".$row[1]."</td>";
-						echo "<td name='as'>".$row[2]."</td>";
-						echo "<td name='po'>".$row[3]."</td>";
-						echo "<td name='pm'>".$row[4]."</td>";
-						echo "<td name='cs'>".$row[5]."</td>";
+						echo "<td name='pn2'>".$row[0]."</td>"; 
+						echo "<td name='go2'>".$row[1]."</td>";
+						echo "<td name='as2'>".$row[2]."</td>";
+						echo "<td name='po2'>".$row[3]."</td>";
+						echo "<td name='pm2'>".$row[4]."</td>";
+						echo "<td name='cs2'>".$row[5]."</td>";
 						echo "</tr>"; 					  
 					}
 				?>
@@ -171,12 +171,12 @@ $team2score = $row[3];
 				<?php
 					foreach($dbh->query("select name, penaltyMinutes, goalieMinutes, goalsAgainst, saves, currentScore from draftedGoalie where draftedTeam = '".$team2."'") as $row ) {
 						echo "<tr>"; 
-						echo "<td name='gn'>".$row[0]."</td>"; 
-						echo "<td name='pm'>".$row[1]."</td>";
-						echo "<td name='gm'>".$row[2]."</td>";
-						echo "<td name='ga'>".$row[3]."</td>";
-						echo "<td name='sa'>".$row[4]."</td>";
-						echo "<td name='cs'>".$row[5]."</td>";
+						echo "<td name='gn2'>".$row[0]."</td>"; 
+						echo "<td name='pm2'>".$row[1]."</td>";
+						echo "<td name='gm2'>".$row[2]."</td>";
+						echo "<td name='ga2'>".$row[3]."</td>";
+						echo "<td name='sa2'>".$row[4]."</td>";
+						echo "<td name='cs2'>".$row[5]."</td>";
 						echo "</tr>"; 					  
 					}
 				?>

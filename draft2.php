@@ -403,7 +403,7 @@
   				  echo '<input type="hidden" name="minutes" value="'.$rows[6].'">';
   				  echo '<input type="hidden" name="goals" value="'.$rows[7].'">';
   				  echo '<input type="hidden" name="penalty" value="'.$rows[5].'">';
-    			echo '<td> <input type="submit" name="select2" value="Pick"> </td>';
+    			echo '<td> <input type="submit" name="select3" value="Pick"> </td>';
     			echo '</form>';
     			echo "</tr>";
     		}

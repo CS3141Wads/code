@@ -86,9 +86,9 @@
                                 <?php
                                         foreach($dbh->query("SELECT * FROM Team WHERE user = '$username' AND name = '$teamName'") as $row) {
                                                 echo "<tr>";
-                                                echo "<td>".$row[8]."</td>";
-                                                echo "<td>".$row[9]."</td>";
-                                                echo "<td>".$row[10]."</td>";
+                                                echo "<td name='wins'>".$row[8]."</td>";
+                                                echo "<td name='losses'>".$row[9]."</td>";
+                                                echo "<td name='ties'>".$row[10]."</td>";
 			                        echo "</tr>";
                                         }
                                 ?>
@@ -113,12 +113,12 @@
                           <?php
                                         foreach($dbh->query("SELECT * FROM Team WHERE user = '$username' AND name = '$teamName'") as $row) {
                                                 echo "<tr>";
-                                                echo "<td>".$row[2]."</td>";
-                                                echo "<td>".$row[3]."</td>";
-                                                echo "<td>".$row[4]."</td>";
-                                                echo "<td>".$row[5]."</td>";
-                                                echo "<td>".$row[6]."</td>";
-                                                echo "<td>".$row[7]."</td>";
+                                                echo "<td name='p1'>".$row[2]."</td>";
+                                                echo "<td name='p2'>".$row[3]."</td>";
+                                                echo "<td name='p3'>".$row[4]."</td>";
+                                                echo "<td name='p4'>".$row[5]."</td>";
+                                                echo "<td name='p5'>".$row[6]."</td>";
+                                                echo "<td name='p6'>".$row[7]."</td>";
                                                 echo "</tr>";
                                         }
                                 ?>
