@@ -5,10 +5,11 @@
 <html>
   <body>
     <?php
-      $newName = $_POST["name"];
-      $newUsername = $_POST["username"];
-      $newPassword = $_POST["password"];
-      $teamName = $_POST["teamName"];
+      $newName = mysql_escape_string($_POST["name"]);
+      $newUsername = mysql_escape_string($_POST["username"]);
+	  $encrypt = md5($_POST["password"]);
+      $newPassword = mysql_escape_string($encrypt);
+      $teamName = mysql_escape_string($_POST["teamName"]);
 
       $config = parse_ini_file("db.ini");
       $dbh = new PDO($config['dsn'], $config['username'], $config['password']);

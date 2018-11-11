@@ -6,8 +6,9 @@
     <body>
         <?php
 
-            $username1 = $_POST["username"];
-            $password1 = $_POST["password"];
+            $username1 = mysql_escape_string($_POST["username"]);
+			$encrypt = md5($_POST["password"]);
+            $password1 = mysql_escape_string($encrypt);
 
             $config = parse_ini_file("db.ini");
             $dbh = new PDO($config['dsn'], $config['username'], $config['password']);

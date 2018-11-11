@@ -16,7 +16,7 @@ public class WebTests {
         System.setProperty("webdriver.chrome.driver", PATH);
         webDriver = new ChromeDriver();
         webDriver.manage().window().maximize();
-      
+        
         //tests for logging in with a valid username and password
         if ( testLogin( "john@smith.com", "john" ) ) 
             System.out.println("Test Successful Login: Passed");
@@ -39,13 +39,19 @@ public class WebTests {
         if ( testCreateAccount( true ) )
         	System.out.println("Test Create Account Login: Passed");
         else
-        	System.out.println("Test Create Account Login: Failed");
-        
+        	System.out.println("Test Create Account Login: Failed"); 
+
         //tests the team name, wins, losses, and ties are displayed properly for a user
-        if ( testProfile( "The LongJohns", 0, 0, 0 ) ) 
+        if ( testProfile( "The LongJohns", 2, 1, 0 ) ) 
         	System.out.println("Test Profile: Passed");
         else
         	System.out.println("Test Profile: Failed");
+        
+        //tests the roster is displayed properly for a user
+        if ( testProfileRoster() )
+        	System.out.println( "Test Profile Roster: Passed" );
+        else
+        	System.out.println( "Test Profile Roster: Failed" );
         
         //tests that a player can be added to a team
         if ( testDraftPlayer( false ) )
@@ -59,27 +65,43 @@ public class WebTests {
         else
         	System.out.println( "Test Remove Player: Failed" );
         
-        
-        /*tests that a goalie can be added to a team
-        if ( testDraftGoalie() )
+        //tests that a goalie can be added to a team
+        if ( testDraftGoalie( false ) )
         	System.out.println( "Test Draft Goalie: Passed" );
         else
         	System.out.println( "Test Draft Goalie: Failed" );
-         */
+        
+        //tests that a goalie can be added and removed 
+        if ( testDraftGoalie( true ) ) 
+        	System.out.println( "Test Remove Goalie: Passed" );
+        else
+        	System.out.println( "Test Remove Goalie: Failed" );
         
         //tests if the correct first team name is displayed properly
-        if ( testGameRank( "Not in my hall!", 20 ) ) 
+        if ( testGameRank( "The LongJohns", 20 ) ) 
         	System.out.println( "Test Game Rank: Passed" );
         else
         	System.out.println( "Test Game Rank: Failed" );
        
         //tests if the most recent game data is displayed
-        if ( testGameHistory( "2018-10-22", "The Scissors" ) ) 
+        if ( testGameHistory( "2018-11-04", "The Scissors" ) ) 
         	System.out.println( "Test Game History Date: Passed" );
         else
         	System.out.println( "Test Game History Date: Failed" );
-    
+        
+        //tests the first team's stats are displayed correctly
+        if ( testResultLeft() )
+        	System.out.println( "Test Result Left: Passed" );
+        else
+        	System.out.println( "Test Result Right: Failed" );
+        
+        //tests the second team's stats are displayed correctly 
+        if ( testResultRight() )
+        	System.out.println( "Test Result Right: Passed" );
+        else
+        	System.out.println( "Test Result Right: Failed" );
 
+        
         webDriver.close();
         webDriver.quit();
     }
@@ -90,7 +112,7 @@ public class WebTests {
             webDriver.findElement(By.name("username")).sendKeys(user); 
             webDriver.findElement(By.name("password")).sendKeys(pass);
             webDriver.findElement(By.name("login")).click();
-            Thread.sleep(500);
+            Thread.sleep(1000);
             
             if (webDriver.getCurrentUrl().equals(SITE+"code/profile.php")){
                 return true;
@@ -167,7 +189,40 @@ public class WebTests {
         }
     }
     
-    //Add profile tests to test the roster 
+    private static boolean testProfileRoster() {
+    	boolean result = false;
+        try {
+            webDriver.navigate().to(SITE+"code/login.php");
+            webDriver.findElement(By.name("username")).sendKeys("john@smith.com"); 
+            webDriver.findElement(By.name("password")).sendKeys("john");
+            webDriver.findElement(By.name("login")).click();
+            Thread.sleep(500);
+            
+            if (webDriver.findElement(By.name("p1")).getText().trim().equals("Adolfo Cowles")) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("p2")).getText().trim().equals("Adolfo Havens")) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("p3")).getText().trim().equals("Amal Yeager")) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("p4")).getText().trim().equals("Ammie Cornwell")) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("p5")).getText().trim().equals("Anneliese Sommer")) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("p6")).getText().trim().equals("Amanda Stone")) {
+            	result = true; 
+            }
+            return result; 
+        }
+        catch (final Exception e) {
+            System.out.println(e.getMessage());
+            return result;
+        }
+    }
     
     private static boolean testDraftPlayer( boolean remove ) {
         try {
@@ -197,16 +252,18 @@ public class WebTests {
         }
     }
     
-    private static boolean testDraftGoalie() {
+    private static boolean testDraftGoalie( boolean remove ) {
         try {
             webDriver.navigate().to(SITE+"code/login.php");
             webDriver.findElement(By.name("username")).sendKeys("john@smith.com"); 
             webDriver.findElement(By.name("password")).sendKeys("john");
             webDriver.findElement(By.name("login")).click();
-            webDriver.findElement(By.name("draftB")).click();
-            webDriver.findElement(By.name("goal")).click(); 
-            webDriver.findElement(By.name("select2")).click(); 
-            
+            webDriver.navigate().to(SITE+"code/draft2.php");
+            webDriver.findElement(By.name("select3")).click();
+            if ( remove ) {
+            	webDriver.navigate().to(SITE+"code/draft2.php");
+            	webDriver.findElement(By.name("rem6")).click();
+            }
             Thread.sleep(500);
             
             if (webDriver.findElement(By.name("rm6")).getText().trim().equals("Amanda Stone")) {  
@@ -215,6 +272,9 @@ public class WebTests {
                 return false;
             }
         } 
+        catch ( NoSuchElementException e ) {
+        	return true; 
+        }
         catch (final Exception e) {
             System.out.println(e.getMessage());
             return false;
@@ -254,13 +314,122 @@ public class WebTests {
             webDriver.findElement(By.name("password")).sendKeys("john");
             webDriver.findElement(By.name("login")).click();
             webDriver.findElement(By.name("gameB")).click();
-            
             Thread.sleep(500);
             
             if (webDriver.findElement(By.name("date")).getText().trim().equals(date)) {  
                 result = true;
             } 
             if (webDriver.findElement(By.name("win")).getText().trim().equals(winner)) {
+            	result = true; 
+            }
+            return result; 
+        } 
+        catch (final Exception e) {
+            System.out.println(e.getMessage());
+            return result;
+        }
+    }
+    
+    private static boolean testResultLeft(){
+    	boolean result = false; 
+        try {
+            webDriver.navigate().to(SITE+"code/login.php");
+            webDriver.findElement(By.name("username")).sendKeys("john@smith.com"); 
+            webDriver.findElement(By.name("password")).sendKeys("john");
+            webDriver.findElement(By.name("login")).click();
+            webDriver.findElement(By.name("gameB")).click();
+            webDriver.findElement(By.name("playGame")).click(); 
+            Thread.sleep(500);
+            
+            if (webDriver.findElement(By.name("t1")).getText().trim().equals("The Scissors")) {  
+                result = true;
+            } 
+            if (webDriver.findElement(By.name("s1")).getText().trim().equals(3)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("pn")).getText().trim().equals("Anthony Blanco")) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("go")).getText().trim().equals(0)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("as")).getText().trim().equals(0)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("po")).getText().trim().equals(0)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("pm")).getText().trim().equals(0)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("cs")).getText().trim().equals(0)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("gn")).getText().trim().equals("Chris Wilkerson")) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("gm")).getText().trim().equals(150)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("ga")).getText().trim().equals(11)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("sa")).getText().trim().equals(139)) {
+            	result = true; 
+            }
+            return result; 
+        } 
+        catch (final Exception e) {
+            System.out.println(e.getMessage());
+            return result;
+        }
+    }
+    
+    private static boolean testResultRight(){
+    	boolean result = false; 
+        try {
+            webDriver.navigate().to(SITE+"code/login.php");
+            webDriver.findElement(By.name("username")).sendKeys("john@smith.com"); 
+            webDriver.findElement(By.name("password")).sendKeys("john");
+            webDriver.findElement(By.name("login")).click();
+            webDriver.findElement(By.name("gameB")).click();
+            webDriver.findElement(By.name("playGame")).click(); 
+            Thread.sleep(500);
+            
+            if (webDriver.findElement(By.name("t2")).getText().trim().equals("The LongJohns")) {  
+                result = true;
+            } 
+            if (webDriver.findElement(By.name("s2")).getText().trim().equals(1)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("pn")).getText().trim().equals("Adolfo Cowles")) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("go")).getText().trim().equals(2)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("as")).getText().trim().equals(3)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("po")).getText().trim().equals(7)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("pm")).getText().trim().equals(0)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("cs")).getText().trim().equals(0)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("gn")).getText().trim().equals("Amanda Stone")) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("gm")).getText().trim().equals(30)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("ga")).getText().trim().equals(10)) {
+            	result = true; 
+            }
+            if (webDriver.findElement(By.name("sa")).getText().trim().equals(33)) {
             	result = true; 
             }
             return result; 
