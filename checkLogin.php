@@ -16,22 +16,26 @@
 
             $dbh->beginTransaction();
             if(isset($_POST["username"]) && isset($_POST["password"])) {
+				if( $username1 == "admin@admin.com" && $password1 = md5("admin") ) {
+					header("Location: admin.php" ); 
+				}
+				else {
+				  // Query the database, is there is a result, we know that user already has an account, so load their profile page
+				  foreach($dbh->query("SELECT * FROM User WHERE userName = '$username1' AND password = '$password1'") as $row) {
+					$_SESSION["name"] = $row[0];
+					$_SESSION["usernameToLoad"] = $username1;
+					$_SESSION["passwordToLoad"] = $password1;
+					$_SESSION["teamName"] = $row[3];
+					$dbh->commit();
 
-              // Query the database, is there is a result, we know that user already has an account, so load their profile page
-              foreach($dbh->query("SELECT * FROM User WHERE userName = '$username1' AND password = '$password1'") as $row) {
-                $_SESSION["name"] = $row[0];
-                $_SESSION["usernameToLoad"] = $username1;
-                $_SESSION["passwordToLoad"] = $password1;
-                $_SESSION["teamName"] = $row[3];
-                $dbh->commit();
+					// Go to that user's profile page
+					header("Location: profile.php");
+					return;
+				  }
 
-                // Go to that user's profile page
-                header("Location: profile.php");
-                return;
-              }
-
-              // If there were no results in the table, direct the user to create an account
-              header("Location: login.php");
+				  // If there were no results in the table, direct the user to create an account
+				  header("Location: login.php");
+				}
             }
         ?>
     </body>

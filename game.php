@@ -112,7 +112,7 @@
 		</br>
 		<div style="margin-left: 1em;">
 			<form action="gameResults.php" method="post">
-				<button type="submit" name="playGame" value="play" class="pure-button pure-button-primary">Play a Game</button>
+				<button type="submit" name="playGame" value="play" class="pure-button pure-button-primary">See Results</button>
 			</form>
 		</div>
 	<div> 
