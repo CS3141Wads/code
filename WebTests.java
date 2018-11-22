@@ -17,6 +17,12 @@ public class WebTests {
         webDriver = new ChromeDriver();
         webDriver.manage().window().maximize();
         
+        //tests that the redirect functionality works properly
+        if ( testRedirect() )
+        	System.out.println("Test Redirect: Passed");
+        else
+        	System.out.println("Test Redirect: Failed");
+        
         //tests for logging in with a valid username and password
         if ( testLogin( "john@smith.com", "john" ) ) 
             System.out.println("Test Successful Login: Passed");
@@ -100,7 +106,6 @@ public class WebTests {
         	System.out.println( "Test Result Right: Passed" );
         else
         	System.out.println( "Test Result Right: Failed" );
-
         
         webDriver.close();
         webDriver.quit();
@@ -115,6 +120,23 @@ public class WebTests {
             Thread.sleep(1000);
             
             if (webDriver.getCurrentUrl().equals(SITE+"code/profile.php")){
+                return true;
+            } else {
+                return false;
+            }
+        } 
+        catch (final Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+    
+    private static boolean testRedirect() {
+        try {
+            webDriver.navigate().to(SITE+"code/profile.php");
+            Thread.sleep(5);
+            
+            if (webDriver.getCurrentUrl().equals(SITE+"code/index.html")){
                 return true;
             } else {
                 return false;
@@ -356,9 +378,6 @@ public class WebTests {
             if (webDriver.findElement(By.name("as")).getText().trim().equals(0)) {
             	result = true; 
             }
-            if (webDriver.findElement(By.name("po")).getText().trim().equals(0)) {
-            	result = true; 
-            }
             if (webDriver.findElement(By.name("pm")).getText().trim().equals(0)) {
             	result = true; 
             }
@@ -409,9 +428,6 @@ public class WebTests {
             	result = true; 
             }
             if (webDriver.findElement(By.name("as")).getText().trim().equals(3)) {
-            	result = true; 
-            }
-            if (webDriver.findElement(By.name("po")).getText().trim().equals(7)) {
             	result = true; 
             }
             if (webDriver.findElement(By.name("pm")).getText().trim().equals(0)) {

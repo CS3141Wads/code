@@ -2,6 +2,9 @@
 <html lang="en">
 <?php
   session_start();
+  if( !isset($_SESSION["name"]) && !isset($_SESSION["usernameToLoad"]) && !isset($_SESSION["passwordToLoad"]) ){
+			 header("Location: index.html"); 
+  }
  ?>
 <head>
     <meta charset="utf-8">
