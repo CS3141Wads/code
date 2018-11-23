@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <?php
   session_start();
+  if( !isset($_SESSION["name"]) && !isset($_SESSION["usernameToLoad"]) && !isset($_SESSION["passwordToLoad"]) ){
+			 header("Location: index.html"); 
+  }
  ?>
 <html lang="en">
 <head>

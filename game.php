@@ -2,6 +2,9 @@
 <html lang="en">
 <?php
   session_start();
+  if( !isset($_SESSION["name"]) && !isset($_SESSION["usernameToLoad"]) && !isset($_SESSION["passwordToLoad"]) ){
+			 header("Location: index.html"); 
+  }
  ?>
 <head>
     <meta charset="utf-8">
@@ -68,9 +71,9 @@
 					$dbh = new PDO($config['dsn'], $config['username'], $config['password']);
 					$dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 				
-					foreach($dbh->query("select name, score from Team order by score desc limit 10") as $row) {
+					foreach($dbh->query("select name, currentScore from Team order by currentScore desc limit 10") as $row) {
 						echo "<tr>"; 
-						echo "<td name='t1'>".$row[0]."</td>"; 
+						echo "<td name='t1'>".$row[0]."</td>";  
 						echo "<td name='s1'>".$row[1]."</td>";
 						echo "</tr>"; 
 					}
