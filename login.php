@@ -56,7 +56,7 @@
 	<fieldset>
 		<div style="margin-left: 1em;">
 			<label for="createAccount">Don't have an account yet?</label>
-			<button type="submit" name="createAccountB" value="create" class="pure-button pure-button-primary">Create One Here</button>
+			<button type="submit" name="createAccountB" value="createDraftOrder.php" class="pure-button pure-button-primary">Create One Here</button>
 		</div>
 	</fieldset>
 </form>

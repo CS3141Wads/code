@@ -31,7 +31,7 @@
 </head>
 <body>
 <div class="header">
-    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed"> 
         <a class="pure-menu-heading" href="">Fantasy Broomball</a>
 		<ul class="pure-menu-list">
 			<li class="pure-menu-item"><a name="logoutB" href="logout.php" class="pure-menu-link">Logout</a></li>
@@ -42,7 +42,9 @@
 <div style="margin-left: 1em;">
 	<button type="submit" name="simGame" class="pure-button pure-button-primary">Simulate Game</button></br></br>
 	<button type="submit" name="matchMaker" class="pure-button pure-button-primary">Make Matches</button></br></br>
-	<button type="submit" name="startDraft" class="pure-button pure-button-primary">Start Draft</button></br></br>
+	<form class="pure-form pure-form-stacked" action="createDraftOrder.php" method="post">
+		<button type="submit" name="startDraft" class="pure-button pure-button-primary">Start Draft</button></br></br>
+	</form>
 </div> 
 </body>
 </html>

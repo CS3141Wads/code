@@ -109,6 +109,12 @@
         <!--<![endif]-->
 </head>
 <body>
+<?php
+		$config = parse_ini_file("db.ini");
+        $dbh = new PDO($config['dsn'], $config['username'], $config['password']);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+		
+?>
 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
@@ -127,15 +133,26 @@
 
 <div class="pure-g">
   <div class="pure-u-1-6" style="margin-left: 1em;">
+	<?php
+		include 'draftturn.php';
+		checkTurn();
+		
+		foreach($dbh->query("select team, num, time from turn") as $row){
+			$team = $row[0];
+			$number = $row[1];
+			$time = $row[2];
+			break;
+		}
+		
+		echo "<h1>".$team."'s Turn</h1>";
+		echo "<h1> <p id='demo'></p></h1>";
+	?>
+
 	<h2>Team Roster</h2>
 		<?php
 
 		$name = $_SESSION["name"];
         $username = $_SESSION["usernameToLoad"];
-
-    	$config = parse_ini_file("db.ini");
-        $dbh = new PDO($config['dsn'], $config['username'], $config['password']);
-        $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
     	if(isset($_POST["nameP"])){
     		$player = $_POST["nameP"];
@@ -167,7 +184,6 @@
 		if(isset($_POST["nameG"])){
 			$player = $_POST["nameG"];
 			foreach( $dbh->query("select * from Team where user = '".$username."'") as $rows){
-				//$dbh->query("update Team set goalie = '".$player."' where user = '".$username."' ");
 				if($rows[7] == NULL){
 					$dbh->query("insert into draftedGoalie values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["penalty"].",".$_POST["minutes"].",".$_POST["goals"].",".$_POST["saves"].",0) ");
 					$dbh->query("update Team set goalie = '".$player."' where user = '".$username."' ");
@@ -224,6 +240,7 @@
     		$dbh->query("delete from draftedGoalie where name = '".$player."' ");
 			$dbh->query("update goalieLifetime set drafted = 0 where name = '".$player."' ");
     	}
+		
 
 		echo "<table class='pure-table pure-table-horizontal'>";
 			echo "<thead>";
@@ -232,7 +249,7 @@
 			echo "</tr>";
 			echo "</thead>";
 		echo "<tbody>";
-
+		
 		$q = $dbh->query("select player1, player2, player3, player4, player5 from Team where user='$username'");
 		$rows = $q->fetch();
 		if($rows[0] != NULL){
@@ -466,6 +483,37 @@ for (i = 0; i < coll.length; i++) {
       evt.currentTarget.className += " active";
     }
   </script>
+  
+
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date('<?php echo $time; ?>').getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+    // Get todays date and time
+    var now = new Date().getTime();
+    
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
+    
+    // Time calculations for days, hours, minutes and seconds
+   // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    //var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    // Output the result in an element with id="demo"
+    document.getElementById("demo").innerHTML = minutes + ":" + seconds;
+    
+    // If the count down is over, write some text 
+    if (distance < 0) {
+        clearInterval(x);
+		location.reload();
+    }
+}, 1000);
+</script>
 
 </body>
 </html>
