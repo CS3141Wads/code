@@ -35,7 +35,7 @@
 <body>
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed"> 
-        <a class="pure-menu-heading" href="">Fantasy Broomball</a>
+        <a class="pure-menu-heading" href="profile.php">Fantasy Broomball</a>
 		<ul class="pure-menu-list">
 			<li class="pure-menu-item"><a name="logoutB" href="logout.php" class="pure-menu-link">Logout</a></li>
         </ul>

@@ -36,7 +36,7 @@
 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="">Fantasy Broomball</a>
+        <a class="pure-menu-heading" href="profile.php">Fantasy Broomball</a>
 
         <ul class="pure-menu-list">
 			<li class="pure-menu-item"><a name="profileB" href="profile.php" class="pure-menu-link">Profile</a></li>

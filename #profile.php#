@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <?php
   session_start();
-  if( !isset($_SESSION["name"]) && !isset($_SESSION["usernameToLoad"]) && !isset($_SESSION["passwordToLoad"]) ){
-			 header("Location: index.html"); 
-  }
  ?>
 <html lang="en">
 <head>
@@ -34,7 +31,7 @@
 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="profile.php">Fantasy Broomball</a>
+        <a class="pure-menu-heading" href="">Fantasy Broomball</a>
 
         <ul class="pure-menu-list">
 			<li class="pure-menu-item"><a name="profileB" href="profile.php" class="pure-menu-link">Profile</a></li>
@@ -71,62 +68,54 @@
       ?>
 	  </br></br>
 
+	  <table class="pure-table pure-table-horizontal">
+                        <thead>
+                                <tr>
+                                        <th>Date</th>
+					        <th>Team</th>
+                                        <th>Score</th>
+                                        <th>Team</th>
+                                        <th>Score</th>
+                                        <th>Winner</th>
+                                </tr>
+				</thead>
+			<tbody>
+			                          <?php
+                                        foreach($dbh->query("select data, team1, team1score, team2, team2score, winner from game where team1=\
+'$teamName' or team2='$teamName' order by data desc") as $row) {
+                                                echo "<tr>";
+			                            echo "<td name='date'>".$row[0]."</td>";
+                                                echo "<td>".$row[1]."</td>";
+                                                echo "<td>".$row[2]."</td>";
+                                                echo "<td>".$row[3]."</td>";
+                                                echo "<td>".$row[4]."</td>";
+                                                echo "<td name='win'>".$row[5]."</td>";
+                                                echo "</tr>";
+						  }
+                                ?>
+						  </tbody>
+	  </table>
+
       <h1 name="teamName" align="center"><?php echo $teamName?></h3>
 
-      <h2 name="owner" align="center">Team Owner: <?php echo $name?></h2>
+      <font name="owner" size="5"><u>Team Owner:</u> <?php echo $name?></font></br></br>
 
-      <h2>Current Record:</h2>
+       <font size="5"><u>Current Record:</u></font></br>
+        <font name="wins" size="5">&nbsp;&nbsp;&nbsp;<?php echo $wins?> wins</font></br>
+        <font name="losses" size="5">&nbsp;&nbsp;&nbsp;<?php echo $losses?> losses</font></br>
+        <font name="ties" size="5">&nbsp;&nbsp;&nbsp;<?php echo $ties?> ties</font></br></br>
 
-              <table class="pure-table pure-table-horizontal">
-                        <thead>
-                                <tr>
-                                        <th>Wins</th>
-                                        <th>Losses</th>
-                                        <th>Ties</th>
-                                </tr>
-                                </thead>
-                        <tbody>
-                                <?php
-                                        foreach($dbh->query("SELECT * FROM Team WHERE user = '$username' AND name = '$teamName'") as $row) {
-                                                echo "<tr>";
-                                                echo "<td name='wins'>".$row[8]."</td>";
-                                                echo "<td name='losses'>".$row[9]."</td>";
-                                                echo "<td name='ties'>".$row[10]."</td>";
-			                        echo "</tr>";
-                                        }
-                                ?>
-                        </tbody>
-               </table>
-	      </br>
+      <font size="5"><u>Current Roster:</u></font></br>
+        <?php
+          $dbh->beginTransaction();
+          foreach($dbh->query("SELECT * FROM draftedPlayer where name = '$player1' or name = '$player2' or name = '$player3' or name = '$player4' or name = '$player5'") as $row) {
+            echo "Player: $row[0]<br>";
+          }
 
-	      <h2>Current Roster:</h2>
-
-	      <table class="pure-table pure-table-horizontal">
-                        <thead>
-                                <tr>
-                                        <th>Player</th>
-                                        <th> </th>
-                                        <th> </th>
-					<th> </th>
-                                        <th> </th>
-					<th>Goalie</th>
-                                </tr>
-                                </thead>
-                        <tbody>
-                          <?php
-                                        foreach($dbh->query("SELECT * FROM Team WHERE user = '$username' AND name = '$teamName'") as $row) {
-                                                echo "<tr>";
-                                                echo "<td name='p1'>".$row[2]."</td>";
-                                                echo "<td name='p2'>".$row[3]."</td>";
-                                                echo "<td name='p3'>".$row[4]."</td>";
-                                                echo "<td name='p4'>".$row[5]."</td>";
-                                                echo "<td name='p5'>".$row[6]."</td>";
-                                                echo "<td name='p6'>".$row[7]."</td>";
-                                                echo "</tr>";
-                                        }
-                                ?>
-                        </tbody>
-               </table>
+          foreach($dbh->query("SELECT * FROM draftedGoalie where name = '$goalie'") as $row) {
+            echo "Goalie: $row[0]<br>";
+          }
+         ?>
 
    </body>
 
