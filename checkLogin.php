@@ -5,7 +5,7 @@
 <html>
     <body>
         <?php
-
+		
             $username1 = mysql_escape_string($_POST["username"]);
 			$encrypt = md5($_POST["password"]);
             $password1 = mysql_escape_string($encrypt);
@@ -16,15 +16,18 @@
 
             $dbh->beginTransaction();
             if(isset($_POST["username"]) && isset($_POST["password"])) {
-				if( $username1 == "admin@admin.com" && $password1 = md5("admin") ) {
+				if( $username1 == "admin@admin.com" && $password1 == md5("admin") ) {
 					header("Location: admin.php" ); 
+					$_SESSION["name"] = "admin";
+					$_SESSION["usernameToLoad"] = $username1; 
+					$_SESSION["passwordToLoad"] = $_password1; 
 				}
 				else {
 				  // Query the database, is there is a result, we know that user already has an account, so load their profile page
 				  foreach($dbh->query("SELECT * FROM User WHERE userName = '$username1' AND password = '$password1'") as $row) {
 					$_SESSION["name"] = $row[0];
 					$_SESSION["usernameToLoad"] = $username1;
-					$_SESSION["passwordToLoad"] = $password1;
+					$_SESSION["passwordToLoad"] = $password1;  
 					$_SESSION["teamName"] = $row[3];
 					$dbh->commit();
 
