@@ -41,6 +41,9 @@ BEGIN
     UPDATE draftedPlayer dp JOIN playerLifetime pl ON dp.name = pl.name
     SET pl.penaltyMinutes = pl.penaltyMinutes + dp.penaltyMinutes;
     
+    -- Update lifetime points of players so that their points represent their updated goals and assists
+    UPDATE playerLifetime SET points = ((goals * 2) + assists) WHERE drafted = 1;
+    
     -- Assign penalty minutes to goalies and update their lifetime stats --
 	UPDATE draftedGoalie dg JOIN goalieLifetime gl ON dg.name = gl.name
     SET dg.penaltyMinutes = 
