@@ -12,12 +12,14 @@
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.open("GET", "simulateGame.php");
             xmlhttp.send();
+            alert("Players and goalies have been assigned points!");
         }
 
         function makeMatches() {
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.open("GET", "makeMatches.php");
             xmlhttp.send();
+            alert("Games have been created and simulated!");
         }
     </script>
 
