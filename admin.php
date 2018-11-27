@@ -7,6 +7,20 @@
   }
 ?>
 <head>
+    <script>
+        function simulateGame() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET", "simulateGame.php");
+            xmlhttp.send();
+        }
+
+        function makeMatches() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET", "makeMatches.php");
+            xmlhttp.send();
+        }
+    </script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A layout example that shows off a responsive product landing page.">
@@ -43,8 +57,8 @@
 </div>
 </br></br></br>
 <div style="margin-left: 1em;">
-	<button type="submit" name="simGame" class="pure-button pure-button-primary">Simulate Game</button></br></br>
-	<button type="submit" name="matchMaker" class="pure-button pure-button-primary">Make Matches</button></br></br>
+	<button type="submit" name="simGame" class="pure-button pure-button-primary" onclick="simulateGame()">Simulate Game</button></br></br>
+	<button type="submit" name="matchMaker" class="pure-button pure-button-primary" onclick="makeMatches()">Make Matches</button></br></br>
 	<form class="pure-form pure-form-stacked" action="createDraftOrder.php" method="post">
 		<button type="submit" name="startDraft" class="pure-button pure-button-primary">Start Draft</button></br></br>
 	</form>
