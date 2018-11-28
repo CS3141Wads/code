@@ -7,22 +7,9 @@
     <title>Create an Account</title>
     
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-" crossorigin="anonymous">
-    
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-old-ie-min.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-        <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
-    <!--<![endif]-->
-    
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-    
-        <!--[if lte IE 8]>
-            <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
-        <![endif]-->
-        <!--[if gt IE 8]><!-->
-            <link rel="stylesheet" href="marketing.css">
-        <!--<![endif]-->
+    <link rel="stylesheet" href="marketing.css">
 </head>
 <body>
 
@@ -38,17 +25,22 @@
 </div>
 </br></br>
 
+<!-- Present the user with fields to create their account -->
 <form class="pure-form pure-form-stacked" action = "newAccount.php" method = "post">
 	<fieldset>
 		<div class="pure-u-1 pure-u-md-1-4" style="margin-left: 1em;">
 			<label for="name">Name</label>
 			<input type =  "text" name="name" required />
+
 			<label for="username">Username</label>
 			<input type = "email" placeholder="email@example.com" name = "username" required />
+
 			<label for="password">Password</label>
 			<input type = "password" name = "password" required />
+
 			<label for="teamName">Team Name</label>
 			<input type = "text" name = "teamName" required />
+            
 			<button type="submit" name="createAccount" value="Create Account" class="pure-button pure-button-primary">Create Account</button>
 		</div>
 	</fieldset> 
