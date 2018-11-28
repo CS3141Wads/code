@@ -16,6 +16,7 @@
     <meta name="description" content="A layout example that shows off a responsive product landing page.">
     <title>Profile</title>
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-" crossorigin="anonymous">
+<<<<<<< HEAD
     <!--[if lte IE 8]>                                                                                                                       
 	<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-old-ie-min.css">                                 
 	<![endif]-->
@@ -35,6 +36,14 @@
   /*
   This section provides the assets we used with our page's header, such as the different colors and fonts imported from outside the basic library.
   */
+=======
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="marketing.css">
+
+</head>
+<body style="margin-left: 1em;">
+>>>>>>> fbeba0ec769a1a59b78c02a6f733394d0200d35e
 
   <body style="margin-left: 1em;">
     

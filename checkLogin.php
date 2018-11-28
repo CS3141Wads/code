@@ -5,15 +5,18 @@
 <html>
     <body>
         <?php
-		
+			
+			// Record the username and password, and also encrypt them
             $username1 = mysql_escape_string($_POST["username"]);
 			$encrypt = md5($_POST["password"]);
             $password1 = mysql_escape_string($encrypt);
 
+			// Connect to the database
             $config = parse_ini_file("db.ini");
             $dbh = new PDO($config['dsn'], $config['username'], $config['password']);
             $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
+			// If the Admin is logging in, go to the admin page
             $dbh->beginTransaction();
             if(isset($_POST["username"]) && isset($_POST["password"])) {
 				if( $username1 == "admin@admin.com" && $password1 == md5("admin") ) {
@@ -23,7 +26,8 @@
 					$_SESSION["passwordToLoad"] = $_password1; 
 				}
 				else {
-				  // Query the database, is there is a result, we know that user already has an account, so load their profile page
+
+				  // Else, query the database. If there is a result, we know that user already has an account, so load their profile page
 				  foreach($dbh->query("SELECT * FROM User WHERE userName = '$username1' AND password = '$password1'") as $row) {
 					$_SESSION["name"] = $row[0];
 					$_SESSION["usernameToLoad"] = $username1;
@@ -44,16 +48,3 @@
     </body>
 </html>
 
-<!-- // $servername = "classdb.it.mtu.edu";
-// $dbUsername = "wads_rw";
-// $dbPassword = "wadsworth";
-// $dbName = "wads";
-// // Create connection
-// $conn = new mysqli ($servername, $dbUsername, $dbPassword, $dbName);
-//
-// // Check connection
-// if ($conn->connect_eror) {
-//     die("Connection failed: " . $conn->connect_error);
-// } else {
-//     echo "Connection successful";
-// } -->
