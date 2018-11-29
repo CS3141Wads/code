@@ -13,6 +13,7 @@
 </head>
 <body>
 
+<!-- creates the top menu on the webpage with links to the homepage, the login page, and the create account page --> 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
         <a class="pure-menu-heading" href="index.html">Fantasy Broomball</a>

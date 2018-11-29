@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-  /* starts a session which grabs data passed from other webpages */
+  // starts a session which grabs data passed from other webpages
   session_start();
-  /* checks if a user is logged in and redirects them to the home page if they aren't */ 
+  // checks if a user is logged in and redirects them to the home page if they aren't 
   if( !isset($_SESSION["name"]) && !isset($_SESSION["usernameToLoad"]) && !isset($_SESSION["passwordToLoad"]) ){
 			 header("Location: index.html"); 
   }
@@ -33,13 +33,9 @@
     <title>Gameplay</title>
     
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-" crossorigin="anonymous">
-
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
-    
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-	
 	<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
-	
     <link rel="stylesheet" href="marketing.css">
 </head>
 <body>
