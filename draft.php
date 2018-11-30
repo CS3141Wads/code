@@ -2,16 +2,12 @@
 <html lang="en">
 <?php
   session_start();
-  if( !isset($_SESSION["name"]) && !isset($_SESSION["usernameToLoad"]) && !isset($_SESSION["passwordToLoad"]) ){
-                         header("Location: index.html");
-  }
  ?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A layout example that shows off a responsive product landing page.">
 	<style>
-	
     /* Style the tab */
     .tab {
      overflow: hidden;
@@ -122,7 +118,7 @@
 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="profile.php">Fantasy Broomball</a>
+        <a class="pure-menu-heading" href="">Fantasy Broomball</a>
 
         <ul class="pure-menu-list">
 			<li class="pure-menu-item"><a name="profileB" href="profile.php" class="pure-menu-link">Profile</a></li>
@@ -180,7 +176,7 @@
 			$_SESSION['rcount'] = 0;
 		}
 		
-		if($rcount == $number){
+		if($rosterCount == $number){
 			checkTurn(1);
 		} else {
 			checkTurn(0);
