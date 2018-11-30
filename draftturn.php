@@ -12,6 +12,7 @@
 	$time = 0;
 	$name = "421.3";
 	
+	
 		date_default_timezone_set("America/New_York");
 		foreach( $dbh->query("select team, time, ID from turn") as $rows){
 				$name = $rows[0];

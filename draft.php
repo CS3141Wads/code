@@ -136,21 +136,44 @@
 	<?php
 		include 'draftturn.php';
 		$rcount = 0;
-		if(isset($_SESSION['rcount'])){
-			$rcount = $_SESSION['rcount'];
-		} else {
-			$_SESSION['rcount'] = 0;
-		}
-		
+		$rosterCount=0;
 		$team = "12d3";
 		$number = 6;
-		$rosterCount=0;
-		
+
 		foreach($dbh->query("select team, num, time from turn") as $row){
 			$team = $row[0];
 			$number = $row[1];
 			$time = $row[2];
 			break;
+		}
+		
+		$q = $dbh->query("select player1, player2, player3, player4, player5 from Team where name='".$team."'");
+		$rows = $q->fetch();
+		if($rows[0] != NULL){
+			$rosterCount++;
+		}
+		if($rows[1] != NULL){
+			$rosterCount++;
+		}
+		if($rows[2] != NULL){
+			$rosterCount++;
+		}
+		if($rows[3] != NULL){
+			$rosterCount++;
+		}
+		if($rows[4] != NULL){
+			$rosterCount++;
+		}
+		foreach( $dbh->query("select goalie from Team where name='".$team."'") as $rows){
+				if($rows[0] != NULL){
+					$rosterCount++;
+				}
+		}
+		
+		if(isset($_SESSION['rcount'])){
+			$rcount = $_SESSION['rcount'];
+		} else {
+			$_SESSION['rcount'] = 0;
 		}
 		
 		if($rcount == $number){
@@ -183,86 +206,6 @@
 
 		$name = $_SESSION["name"];
         $username = $_SESSION["usernameToLoad"];
-
-    	if(isset($_POST["nameP"])){
-    		$player = $_POST["nameP"];
-    		foreach( $dbh->query("select * from Team where user = '".$username."'") as $rows){
-    			if($rows[2]==NULL){
-    				$dbh->query("insert into draftedPlayer values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["goals"].",".$_POST["assists"].",".$_POST["penalty"].",0) ");
-    				$dbh->query("update Team set player1 = '".$player."' where user = '".$username."' ");
-					$dbh->query("update playerLifetime set drafted = 1 where name = '".$player."' ");
-    			} else if($rows[3]==NULL){
-    				$dbh->query("insert into draftedPlayer values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["goals"].",".$_POST["assists"].",".$_POST["penalty"].",0) ");
-    				$dbh->query("update Team set player2 = '".$player."' where user = '".$username."' ");
-					$dbh->query("update  playerLifetime set drafted = 1 where name = '".$player."' ");
-    			} else if($rows[4]==NULL){
-    				$dbh->query("insert into draftedPlayer values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["goals"].",".$_POST["assists"].",".$_POST["penalty"].",0) ");
-    				$dbh->query("update Team set player3 = '".$player."' where user = '".$username."' ");
-					$dbh->query("update playerLifetime set drafted = 1 where name = '".$player."' ");
-    			} else if($rows[5]==NULL){
-    				$dbh->query("insert into draftedPlayer values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["goals"].",".$_POST["assists"].",".$_POST["penalty"].",0) ");
-    				$dbh->query("update Team set player4 = '".$player."' where user = '".$username."' ");
-					$dbh->query("update playerLifetime set drafted = 1 where name = '".$player."' ");
-    			} else if($rows[6]==NULL){
-    				$dbh->query("insert into draftedPlayer values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["goals"].",".$_POST["assists"].",".$_POST["penalty"].",0) ");
-    				$dbh->query("update Team set player5 = '".$player."' where user = '".$username."' ");
-					$dbh->query("update playerLifetime set drafted = 1 where name = '".$player."' ");
-    			} 
-    		}
-    	}
-
-		if(isset($_POST["nameG"])){
-			$player = $_POST["nameG"];
-			foreach( $dbh->query("select * from Team where user = '".$username."'") as $rows){
-				if($rows[7] == NULL){
-					$dbh->query("insert into draftedGoalie values('".$player."','".$_POST["nameT"]."','".$rows[1]."',".$_POST["penalty"].",".$_POST["minutes"].",".$_POST["goals"].",".$_POST["saves"].",0) ");
-					$dbh->query("update Team set goalie = '".$player."' where user = '".$username."' ");
-					$dbh->query("update goalieLifetime set drafted = 1 where name = '".$player."' ");
-				}
-			}
-		}
-
-    	if(isset($_POST["rm1"])){
-    		$player = $_POST["rm1"];
-    		$dbh->query("update Team set player1 = NULL where user = '".$username."' ");
-    		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
-			$dbh->query("update playerLifetime set drafted = 0 where name = '".$player."' ");
-    	}
-
-    	if(isset($_POST["rm2"])){
-    		$player = $_POST["rm2"];
-    		$dbh->query("update Team set player2 = NULL where user = '".$username."' ");
-    		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
-			$dbh->query("update playerLifetime set drafted = 0 where name = '".$player."' ");
-    	}
-
-    	if(isset($_POST["rm3"])){
-    		$player = $_POST["rm3"];
-    		$dbh->query("update Team set player3 = NULL where user = '".$username."' ");
-    		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
-			$dbh->query("update playerLifetime set drafted = 0 where name = '".$player."' ");
-    	}
-
-    	if(isset($_POST["rm4"])){
-    		$player = $_POST["rm4"];
-    		$dbh->query("update Team set player4 = NULL where user = '".$username."' ");
-    		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
-			$dbh->query("update playerLifetime set drafted = 0 where name = '".$player."' ");
-    	}
-
-    	if(isset($_POST["rm5"])){
-    		$player = $_POST["rm5"];
-    		$dbh->query("update Team set player5 = NULL where user = '".$username."' ");
-    		$dbh->query("delete from draftedPlayer where name = '".$player."' ");
-			$dbh->query("update playerLifetime set drafted = 0 where name = '".$player."' ");
-    	}
-
-		if(isset($_POST["rm6"])){
-    		$player = $_POST["rm6"];
-    		$dbh->query("update Team set goalie = NULL where user = '".$username."' ");
-    		$dbh->query("delete from draftedGoalie where name = '".$player."' ");
-			$dbh->query("update goalieLifetime set drafted = 0 where name = '".$player."' ");
-    	}
 		
 		
 
@@ -277,11 +220,12 @@
 		$q = $dbh->query("select player1, player2, player3, player4, player5 from Team where user='$username'");
 		$rows = $q->fetch();
 		if($rows[0] != NULL){
-			$rosterCount++;
 			echo "<tr>";
 			echo "<td name='rm1'>".$rows[0]."</td> ";
 			if($team == "12d3" || $team == $teamName ){
-				echo '<form action="draft.php" method="post">';
+				echo '<form action="pick.php" method="post">';
+				 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
 				echo '<input type="hidden" name="rm1" value="'.$rows[0].'">';
 				echo '<td> <input type="submit" name="rem1" value="Remove"> </td>';
 				echo '</form>';
@@ -289,11 +233,12 @@
 			echo "</tr>";
 		}
 		if($rows[1] != NULL){
-			$rosterCount++;
 			echo "<tr>";
 			echo "<td name='rm2'>".$rows[1]."</td> ";
 			if($team == "12d3" || $team == $teamName ){
-				echo '<form action="draft.php" method="post">';
+				echo '<form action="pick.php" method="post">';
+				 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
 				echo '<input type="hidden" name="rm2" value="'.$rows[1].'">';
 				echo '<td> <input type="submit" name="rem2" value="Remove"> </td>';
 				echo '</form>';
@@ -301,11 +246,12 @@
 			echo "</tr>";
 		}
 		if($rows[2] != NULL){
-			$rosterCount++;
 			echo "<tr>";
 			echo "<td name='rm3'>".$rows[2]."</td> ";
 			if($team == "12d3" || $team == $teamName ){
-				echo '<form action="draft.php" method="post">';
+				echo '<form action="pick.php" method="post">';
+				 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
 				echo '<input type="hidden" name="rm3" value="'.$rows[2].'">';
 				echo '<td> <input type="submit" name="rem3" value="Remove"> </td>';
 				echo '</form>';
@@ -313,11 +259,12 @@
 			echo "</tr>";
 		}
 		if($rows[3] != NULL){
-			$rosterCount++;
 			echo "<tr>";
 			echo "<td name='rm4'>".$rows[3]."</td> ";
 			if($team == "12d3" || $team == $teamName ){
-				echo '<form action="draft.php" method="post">';
+				echo '<form action="pick.php" method="post">';
+				 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
 				echo '<input type="hidden" name="rm4" value="'.$rows[3].'">';
 				echo '<td> <input type="submit" name="rem4" value="Remove"> </td>';
 				echo '</form>';
@@ -325,11 +272,12 @@
 			echo "</tr>";
 		}
 		if($rows[4] != NULL){
-			$rosterCount++;
 			echo "<tr>";
 			echo "<td name='rm5'>".$rows[4]."</td> ";
 			if($team == "12d3" || $team == $teamName ){
-				echo '<form action="draft.php" method="post">';
+				echo '<form action="pick.php" method="post">';
+				 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
 				echo '<input type="hidden" name="rm5" value="'.$rows[4].'">';
 				echo '<td> <input type="submit" name="rem5" value="Remove"> </td>';
 				echo '</form>';
@@ -345,11 +293,12 @@
 		echo "<tbody>";
 			foreach( $dbh->query("select goalie from Team where user = '".$username."'") as $rows){
 				if($rows[0] != NULL){
-					$rosterCount++;
 					echo "<tr>";
 					echo "<td name='rm6'>".$rows[0]."</td>";
 					if($team == "12d3" || $team == $teamName ){
-						echo '<form action="draft.php" method="post">';
+						echo '<form action="pick.php" method="post">';
+						 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
 						echo '<input type="hidden" name="rm6" value="'.$rows[0].'">';
 						echo '<td> <input type="submit" name="rem6" value="Remove"> </td>';
 						echo '</form>';
@@ -406,7 +355,9 @@
                 echo "<td>".$rows[7]."</td> ";
                 echo "<td>".$rows[8]."</td> ";
 				if(($team == "12d3" || $team == $teamName) && $rosterCount < $number){
-                echo '<form action="draft.php" method="post">';
+                echo '<form action="pick.php" method="post">';
+					 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
                   echo '<input type="hidden" name="nameP" value="'.$rows[0].'">';
                   echo '<input type="hidden" name="nameT" value="'.$rows[1].'">';
                   echo '<input type="hidden" name="goals" value="'.$rows[5].'">';
@@ -459,7 +410,9 @@
     			echo "<td>".$rows[7]."</td> ";
     			echo "<td>".$rows[5]."</td> ";
 				if(($team == "12d3" || $team == $teamName) && $rosterCount < $number){
-    			echo '<form action="draft.php" method="post">';
+    			echo '<form action="pick.php" method="post">';
+				 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
       			echo '<input type="hidden" name="nameG" value="'.$rows[0].'">';
   				  echo '<input type="hidden" name="nameT" value="'.$rows[1].'">';
   				  echo '<input type="hidden" name="saves" value="'.$rows[8].'">';
@@ -478,23 +431,6 @@
   </div>
 </div>
 </div>
-
-<!--<script>
-var coll = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-}
-</script> -->
 
 <script>
     $(document).ready( function () {
@@ -538,19 +474,18 @@ for (i = 0; i < coll.length; i++) {
 var countDownDate = new Date('<?php echo $time; ?>').getTime();
 
 var count = <?php echo $count; ?>;
+var now = new Date('<?php echo date('Y-m-d H:i:s')?>').getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
 
     // Get todays date and time
-    var now = new Date().getTime();
+    now = now + 1000;
     
     // Find the distance between now and the count down date
     var distance = countDownDate - now;
     
     // Time calculations for days, hours, minutes and seconds
-   // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    //var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
