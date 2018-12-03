@@ -51,7 +51,7 @@ $dbh = new PDO($config['dsn'], $config['username'], $config['password']);
 $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
 //gets the two team names and scores from the database for the most recent game played 
-$q = $dbh->query("select team1, team1score, team2, team2score from game where team1='$teamName' or team2='$teamName' order by data desc limit 1"); 
+$q = $dbh->query("select team1, team1score, team2, team2score from game2 where team1='$teamName' or team2='$teamName' order by data desc limit 1"); 
 $row = $q->fetch(); 
 $team1 = $row[0];
 $team1score = $row[1]; 
