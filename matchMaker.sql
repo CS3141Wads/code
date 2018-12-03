@@ -8,7 +8,8 @@ BEGIN
     
 	-- Reset all teams to have not played yet
 	UPDATE Team SET played = 0;
-
+    DELETE from game;
+	
 	WHILE(SELECT COUNT(*) FROM Team WHERE played = 0) >= 2
     DO
 		-- Select 2 random teams and mark them as having each played a game
@@ -21,11 +22,13 @@ BEGIN
         -- Get the scores for each team
         SET team1Score = (SELECT currentScore FROM Team WHERE name = team1Name);
         SET team2Score = (SELECT currentScore FROM Team WHERE name = team2Name);
-        
+	
         -- Call the determineWinner function to decide who won the game (or if it's a tie)
         SET theWinner = determineWinner(team1Score, team2Score, team1Name, team2Name);
         
 		-- Insert data into game table
-		INSERT INTO game2 VALUES(team1Name, team2Name, CURRENT_DATE(), theWinner, team1Score, team2Score);
+		INSERT INTO game VALUES(team1Name, team2Name, CURRENT_DATE(), theWinner, team1Score, team2Score);
+        INSERT INTO game2 VALUES(team1Name, team2Name, CURRENT_DATE(), theWinner, team1Score, team2Score);
+        
    END WHILE;  
 END
