@@ -2,16 +2,12 @@
 <html lang="en">
 <?php
   session_start();
-  if( !isset($_SESSION["name"]) && !isset($_SESSION["usernameToLoad"]) && !isset($_SESSION["passwordToLoad"]) ){
-                         header("Location: index.html");
-  }
  ?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A layout example that shows off a responsive product landing page.">
 	<style>
-	
     /* Style the tab */
     .tab {
      overflow: hidden;
@@ -122,7 +118,7 @@
 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="profile.php">Fantasy Broomball</a>
+        <a class="pure-menu-heading" href="">Fantasy Broomball</a>
 
         <ul class="pure-menu-list">
 			<li class="pure-menu-item"><a name="profileB" href="profile.php" class="pure-menu-link">Profile</a></li>
@@ -139,18 +135,19 @@
   <div class="pure-u-1-6" style="margin-left: 1em;">
 	<?php
 		include 'draftturn.php';
-		$rcount = 0;
 		$rosterCount=0;
-		$team = "12d3";
+		$team = "12d3"; // make it so draft works after the draft
 		$number = 6;
 
+		// gets information for whos turn it is
 		foreach($dbh->query("select team, num, time from turn") as $row){
-			$team = $row[0];
-			$number = $row[1];
-			$time = $row[2];
+			$team = $row[0];   // whoes turn it is
+			$number = $row[1]; // number of people alowed to be draft for this round
+			$time = $row[2];   // the time they can draft until
 			break;
 		}
 		
+		// counts how many people the currents team has.
 		$q = $dbh->query("select player1, player2, player3, player4, player5 from Team where name='".$team."'");
 		$rows = $q->fetch();
 		if($rows[0] != NULL){
@@ -169,18 +166,13 @@
 			$rosterCount++;
 		}
 		foreach( $dbh->query("select goalie from Team where name='".$team."'") as $rows){
-				if($rows[0] != NULL){
-					$rosterCount++;
-				}
+			if($rows[0] != NULL){
+				$rosterCount++;
+			}
 		}
 		
-		if(isset($_SESSION['rcount'])){
-			$rcount = $_SESSION['rcount'];
-		} else {
-			$_SESSION['rcount'] = 0;
-		}
-		
-		if($rcount == $number){
+		// if an auto pick needs to be done or not
+		if($rosterCount == $number){
 			checkTurn(1);
 		} else {
 			checkTurn(0);
@@ -188,12 +180,13 @@
 		
 		define("count", 0);
 		
+		// how many people there are left to pick
 		foreach($dbh->query("select count(*) from turn") as $row){
-				$count = $row[0];
+			$count = $row[0];
 			break;
 		}
 		
-		 $teamName = $_SESSION["teamName"];
+		$teamName = $_SESSION["teamName"];
 		
 		if($team != "12d3"){
 			echo "<br>";
@@ -211,8 +204,7 @@
 		$name = $_SESSION["name"];
         $username = $_SESSION["usernameToLoad"];
 		
-		
-
+		// display current roster
 		echo "<table class='pure-table pure-table-horizontal'>";
 			echo "<thead>";
 			echo "<tr>";
@@ -223,13 +215,13 @@
 		
 		$q = $dbh->query("select player1, player2, player3, player4, player5 from Team where user='$username'");
 		$rows = $q->fetch();
-		if($rows[0] != NULL){
+		if($rows[0] != NULL){  // if there is a person then display them
 			echo "<tr>";
 			echo "<td name='rm1'>".$rows[0]."</td> ";
-			if($team == "12d3" || $team == $teamName ){
+			if($team == "12d3" || $team == $teamName ){ // if you can pick here are the remove buttons
 				echo '<form action="pick.php" method="post">';
-				 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
-                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
+				echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+                echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
 				echo '<input type="hidden" name="rm1" value="'.$rows[0].'">';
 				echo '<td> <input type="submit" name="rem1" value="Remove"> </td>';
 				echo '</form>';
@@ -241,8 +233,8 @@
 			echo "<td name='rm2'>".$rows[1]."</td> ";
 			if($team == "12d3" || $team == $teamName ){
 				echo '<form action="pick.php" method="post">';
-				 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
-                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
+				echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+                echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
 				echo '<input type="hidden" name="rm2" value="'.$rows[1].'">';
 				echo '<td> <input type="submit" name="rem2" value="Remove"> </td>';
 				echo '</form>';
@@ -254,8 +246,8 @@
 			echo "<td name='rm3'>".$rows[2]."</td> ";
 			if($team == "12d3" || $team == $teamName ){
 				echo '<form action="pick.php" method="post">';
-				 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
-                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
+				echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+                echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
 				echo '<input type="hidden" name="rm3" value="'.$rows[2].'">';
 				echo '<td> <input type="submit" name="rem3" value="Remove"> </td>';
 				echo '</form>';
@@ -267,8 +259,8 @@
 			echo "<td name='rm4'>".$rows[3]."</td> ";
 			if($team == "12d3" || $team == $teamName ){
 				echo '<form action="pick.php" method="post">';
-				 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
-                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
+				echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+                echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
 				echo '<input type="hidden" name="rm4" value="'.$rows[3].'">';
 				echo '<td> <input type="submit" name="rem4" value="Remove"> </td>';
 				echo '</form>';
@@ -280,8 +272,8 @@
 			echo "<td name='rm5'>".$rows[4]."</td> ";
 			if($team == "12d3" || $team == $teamName ){
 				echo '<form action="pick.php" method="post">';
-				 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
-                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
+				echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+                echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
 				echo '<input type="hidden" name="rm5" value="'.$rows[4].'">';
 				echo '<td> <input type="submit" name="rem5" value="Remove"> </td>';
 				echo '</form>';
@@ -301,8 +293,8 @@
 					echo "<td name='rm6'>".$rows[0]."</td>";
 					if($team == "12d3" || $team == $teamName ){
 						echo '<form action="pick.php" method="post">';
-						 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
-                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
+						echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+						echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
 						echo '<input type="hidden" name="rm6" value="'.$rows[0].'">';
 						echo '<td> <input type="submit" name="rem6" value="Remove"> </td>';
 						echo '</form>';
@@ -326,6 +318,8 @@
 
     <div id="Players" class="tabcontent">
     <?php
+	
+	//display the players to be drafted
       echo '<table id="table_id" class="display">';
         echo '<thead>';
           echo '<tr>';
@@ -344,35 +338,35 @@
 
         echo '<tbody>';
 
+			// gets rows with player lifetime stats 
             foreach( $dbh->query("select * from playerLifetime") as $rows){
-              //echo '<tr>';
-              if($rows[9] == 0){
-                //echo "<td>";
-                echo "<tr>";
-                echo "<td>".$rows[0]."</td> ";
-                echo "<td>".$rows[1]."</td> ";
-                echo "<td>".$rows[2]."</td> ";
-                echo "<td>".$rows[3]."</td> ";
-                echo "<td>".$rows[4]."</td> ";
-                echo "<td>".$rows[5]."</td> ";
-                echo "<td>".$rows[6]."</td> ";
-                echo "<td>".$rows[7]."</td> ";
-                echo "<td>".$rows[8]."</td> ";
-				if(($team == "12d3" || $team == $teamName) && $rosterCount < $number){
-                echo '<form action="pick.php" method="post">';
-					 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
-                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
-                  echo '<input type="hidden" name="nameP" value="'.$rows[0].'">';
-                  echo '<input type="hidden" name="nameT" value="'.$rows[1].'">';
-                  echo '<input type="hidden" name="goals" value="'.$rows[5].'">';
-                  echo '<input type="hidden" name="assists" value="'.$rows[6].'">';
-                  echo '<input type="hidden" name="points" value="'.$rows[7].'">';
-                  echo '<input type="hidden" name="penalty" value="'.$rows[8].'">';
-                echo '<td> <input type="submit" name="select2" value="Pick"> </td>';
-                echo '</form>';
+				if($rows[9] == 0){
+					echo "<tr>";
+					echo "<td>".$rows[0]."</td> ";
+					echo "<td>".$rows[1]."</td> ";
+					echo "<td>".$rows[2]."</td> ";
+					echo "<td>".$rows[3]."</td> ";
+					echo "<td>".$rows[4]."</td> ";
+					echo "<td>".$rows[5]."</td> ";
+					echo "<td>".$rows[6]."</td> ";
+					echo "<td>".$rows[7]."</td> ";
+					echo "<td>".$rows[8]."</td> ";
+					// If you can pick a player then here are the buttons
+					if(($team == "12d3" || $team == $teamName) && $rosterCount < $number){
+						echo '<form action="pick.php" method="post">';
+						echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+						echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
+						echo '<input type="hidden" name="nameP" value="'.$rows[0].'">';
+						echo '<input type="hidden" name="nameT" value="'.$rows[1].'">';
+						echo '<input type="hidden" name="goals" value="'.$rows[5].'">';
+						echo '<input type="hidden" name="assists" value="'.$rows[6].'">';
+						echo '<input type="hidden" name="points" value="'.$rows[7].'">';
+						echo '<input type="hidden" name="penalty" value="'.$rows[8].'">';
+						echo '<td> <input type="submit" name="select2" value="Pick"> </td>';
+						echo '</form>';
+					}
+				echo "</tr>";
 				}
-              echo "</tr>";
-              }
             }
         echo '</tbody>';
       echo '</table>';
@@ -380,8 +374,6 @@
     </div>
 
     <div id="Goalies" class="tabcontent">
-	 <!--<button class="collapsible">Open Goalies</button>
-    <div class="content">-->
     <?php
     	echo '<table id="table_id2" class="display">';
 			echo'<thead>';
@@ -401,6 +393,7 @@
 
       echo '<tbody>';
 
+		// display goalieLifetime stats 
     	foreach( $dbh->query("select * from goalieLifetime") as $rows){
     		if($rows[9] == 0){
     			echo "<tr>";
@@ -413,24 +406,25 @@
     			echo "<td>".$rows[6]."</td> ";
     			echo "<td>".$rows[7]."</td> ";
     			echo "<td>".$rows[5]."</td> ";
+				// if you can pick a goalie then here is the buttons
 				if(($team == "12d3" || $team == $teamName) && $rosterCount < $number){
-    			echo '<form action="pick.php" method="post">';
-				 echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
-                  echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
-      			echo '<input type="hidden" name="nameG" value="'.$rows[0].'">';
-  				  echo '<input type="hidden" name="nameT" value="'.$rows[1].'">';
-  				  echo '<input type="hidden" name="saves" value="'.$rows[8].'">';
-  				  echo '<input type="hidden" name="minutes" value="'.$rows[6].'">';
-  				  echo '<input type="hidden" name="goals" value="'.$rows[7].'">';
-  				  echo '<input type="hidden" name="penalty" value="'.$rows[5].'">';
-    			echo '<td> <input type="submit" name="select2" value="Pick"> </td>';
-    			echo '</form>';
+					echo '<form action="pick.php" method="post">';
+					echo '<input type="hidden" name="user" value="'.$_SESSION["name"].'">';
+					echo '<input type="hidden" name="username" value="'.$_SESSION["usernameToLoad"].'">';
+					echo '<input type="hidden" name="nameG" value="'.$rows[0].'">';
+					echo '<input type="hidden" name="nameT" value="'.$rows[1].'">';
+					echo '<input type="hidden" name="saves" value="'.$rows[8].'">';
+					echo '<input type="hidden" name="minutes" value="'.$rows[6].'">';
+					echo '<input type="hidden" name="goals" value="'.$rows[7].'">';
+					echo '<input type="hidden" name="penalty" value="'.$rows[5].'">';
+					echo '<td> <input type="submit" name="select2" value="Pick"> </td>';
+					echo '</form>';
 				}
     			echo "</tr>";
     		}
-    	}
+    	}	
     	echo '</tbody>';
-    echo '</table>';
+		echo '</table>';
     ?>
   </div>
 </div>
