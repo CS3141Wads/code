@@ -8,4 +8,7 @@
     // Call the procedure
     $stmt = $dbh->prepare("CALL matchMaker()");
     $stmt->execute();
+
+    $stmt2 = $dbh->prepare("CALL update_team_stats()");
+    $stmt2->execute();
 ?>
