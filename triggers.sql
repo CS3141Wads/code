@@ -1,29 +1,4 @@
 delimiter //
--- updates the wins, losses, and ties of a team based on their most recent game -- 
-create trigger update_team_stats after insert on game
-for each row begin
-	declare win varchar(25); 
-    declare dat date; 
-    declare t1 varchar(25);
-    declare t2 varchar(25);
-    -- selects the winner from the most recent game -- 
-    select winner into win from game order by data desc limit 1; 
-    -- selects the date from the most recent game -- 
-    select data into dat from game order by data desc limit 1; 
-    -- grabs both team names, where the lossing team name will be null -- 
-    select team1 into t1 from game where data=dat and team1 != win;
-    select team2 into t2 from game where data=dat and team2 != win; 
-    -- increases the tie count for both teams if they tie  -- 
-    if ( win like 'tie' ) then 
-		update Team set ties = ties + 1 where name = t1;
-        update Team set ties = ties + 1 where name = t2; 
-	-- increases the win count and losses count for the winning and lossing team respectively -- 
-    else 
-		update Team set wins = wins + 1 where name = win; 
-		update Team set losses = losses + 1 where name = ifnull ( t1, t2 ); 
-	end if; 
-end // 
-
 -- updates the player's lifetime stats when they play in a game that ties -- 
 delimiter // 
 create trigger update_lifetime_stats after update on Team
