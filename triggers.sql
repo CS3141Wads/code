@@ -1,6 +1,5 @@
 delimiter //
 -- updates the player's lifetime stats when they play in a game that ties -- 
-delimiter // 
 create trigger update_lifetime_stats after update on Team
 for each row begin 
 	-- checks if the most recent game resulted in a win and updates the win count of each player -- 
@@ -42,6 +41,22 @@ UPDATE Team INNER JOIN draftedPlayer ON Team.player4 = draftedPlayer.name SET Te
 UPDATE Team INNER JOIN draftedPlayer ON Team.player5 = draftedPlayer.name SET Team.currentScore = Team.currentScore + draftedPlayer.currentScore;
 UPDATE Team INNER JOIN draftedGoalie ON Team.goalie = draftedGoalie.name SET Team.currentScore = Team.currentScore + draftedGoalie.currentScore;
 END;//
+
+-- updates each team's total score any time a goalie's personal score is updated 
+CREATE TRIGGER update_team_score_2 AFTER UPDATE ON draftedGoalie
+FOR EACH ROW
+BEGIN 
+-- resets team score to zero, individual player score are then added to the total one at a time 
+UPDATE Team SET currentScore = 0;
+UPDATE Team INNER JOIN draftedPlayer ON Team.player1 = draftedPlayer.name SET Team.currentScore = Team.currentScore + draftedPlayer.currentScore;
+UPDATE Team INNER JOIN draftedPlayer ON Team.player2 = draftedPlayer.name SET Team.currentScore = Team.currentScore + draftedPlayer.currentScore;
+UPDATE Team INNER JOIN draftedPlayer ON Team.player3 = draftedPlayer.name SET Team.currentScore = Team.currentScore + draftedPlayer.currentScore;
+UPDATE Team INNER JOIN draftedPlayer ON Team.player4 = draftedPlayer.name SET Team.currentScore = Team.currentScore + draftedPlayer.currentScore;
+UPDATE Team INNER JOIN draftedPlayer ON Team.player5 = draftedPlayer.name SET Team.currentScore = Team.currentScore + draftedPlayer.currentScore;
+UPDATE Team INNER JOIN draftedGoalie ON Team.goalie = draftedGoalie.name SET Team.currentScore = Team.currentScore + draftedGoalie.currentScore;
+END;//
+
+
 delimiter ;
 
 
