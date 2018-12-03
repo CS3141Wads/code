@@ -80,7 +80,7 @@
 	<div class="pure-u-3-5">
 		<!-- creates a table that displays all the games the user's team has played in -->
 		<h2>Game History</h2>
-		<table class="pure-table pure-table-horizontal">
+		<table name="gameHistory" class="pure-table pure-table-horizontal">
 			<thead>
 				<tr>
 					<th>Date</th>

@@ -23,6 +23,12 @@ public class WebTests {
         else
         	System.out.println("Test Redirect: Failed");
         
+        //tests that the admin user can login 
+        if ( testAdmin() ) 
+        	System.out.println("Test Admin: Passed");
+        else
+        	System.out.println("Test Admin: Failed");
+        
         //tests for logging in with a valid username and password
         if ( testLogin( "john@smith.com", "john" ) ) 
             System.out.println("Test Successful Login: Passed");
@@ -107,6 +113,18 @@ public class WebTests {
         else
         	System.out.println( "Test Result Right: Failed" );
         
+        //tests that simulate game and match maker is called
+        if ( testSimGame() )
+        	System.out.println("Test Sim Game: Passed");
+        else
+        	System.out.println("Test Sim Game: Failed");
+        
+        //tests that starting the draft works properly
+        if ( testStartDraft() )
+        	System.out.println("Test Start Draft: Passed");
+        else
+        	System.out.println("Test Start Draft: Failed");
+        
         webDriver.close();
         webDriver.quit();
     }
@@ -117,9 +135,29 @@ public class WebTests {
             webDriver.findElement(By.name("username")).sendKeys(user); 
             webDriver.findElement(By.name("password")).sendKeys(pass);
             webDriver.findElement(By.name("login")).click();
-            Thread.sleep(1000);
+            Thread.sleep(500);
             
             if (webDriver.getCurrentUrl().equals(SITE+"code/profile.php")){
+                return true;
+            } else {
+                return false;
+            }
+        } 
+        catch (final Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+    
+    private static boolean testAdmin() {
+        try {
+            webDriver.navigate().to(SITE+"code/login.php");
+            webDriver.findElement(By.name("username")).sendKeys("admin@admin.com"); 
+            webDriver.findElement(By.name("password")).sendKeys("admin");
+            webDriver.findElement(By.name("login")).click();
+            Thread.sleep(500);
+            
+            if (webDriver.getCurrentUrl().equals(SITE+"code/admin.php")){
                 return true;
             } else {
                 return false;
@@ -453,6 +491,52 @@ public class WebTests {
         catch (final Exception e) {
             System.out.println(e.getMessage());
             return result;
+        }
+    }
+    
+    private static boolean testSimGame() {
+        try {
+            webDriver.navigate().to(SITE+"code/login.php");
+            webDriver.findElement(By.name("username")).sendKeys("admin@admin.com"); 
+            webDriver.findElement(By.name("password")).sendKeys("admin");
+            webDriver.findElement(By.name("login")).click();
+            webDriver.findElement(By.name("simGame")).click();
+            Thread.sleep(500);
+            
+            if ( webDriver.switchTo().alert().getText().equals("Players and goalies have been assigned points, and matches have been made!") ) {
+            	return true;
+            }
+            else {
+            	return false; 
+            }
+            
+        } 
+        catch (final Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+    
+    private static boolean testStartDraft() {
+        try {
+            webDriver.navigate().to(SITE+"code/login.php");
+            webDriver.findElement(By.name("username")).sendKeys("admin@admin.com"); 
+            webDriver.findElement(By.name("password")).sendKeys("admin");
+            webDriver.findElement(By.name("login")).click();
+            webDriver.findElement(By.name("startDraft")).click();
+            Thread.sleep(500);
+            
+            if ( webDriver.getCurrentUrl().equals(SITE+"/code/createDraftOrder.php") ) {
+            	return true;
+            }
+            else {
+            	return false; 
+            }
+            
+        } 
+        catch (final Exception e) {
+            System.out.println(e.getMessage());
+            return false;
         }
     }
     
