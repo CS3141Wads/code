@@ -42,15 +42,15 @@
 	for($i = 1; $i < 7; $i++){
 		if($i%2 == 0){
 			foreach( $dbh->query("select name from Team order by name") as $rows){
-				//$date = date('Y-m-d H:i:s', strtotime('+'.$id*2 . ' minute'));
-				$date = date('Y-m-d H:i:s', strtotime('+'.$id*10 . ' second'));
+				$date = date('Y-m-d H:i:s', strtotime('+'.$id. ' minute'));
+				//$date = date('Y-m-d H:i:s', strtotime('+'.$id*10 . ' second'));
 				$dbh->query("insert into turn(ID, team, num, time) values( ".$id.", '".$rows[0]."', ".$i.", '".$date."' )");
 				$id++;
 			}
 		} else {
 			foreach( $dbh->query("select name from Team order by name desc") as $rows){
-			//	$date = date('Y-m-d H:i:s', strtotime('+'.$id*2 . ' minute'));
-			$date = date('Y-m-d H:i:s', strtotime('+'.$id*10 . ' second'));
+				$date = date('Y-m-d H:i:s', strtotime('+'.$id. ' minute'));
+			//$date = date('Y-m-d H:i:s', strtotime('+'.$id*10 . ' second'));
 				$dbh->query("insert into turn(ID, team, num, time) values( ".$id.",'".$rows[0]."', ".$i.", '".$date."' )");
 				$id++;
 			}

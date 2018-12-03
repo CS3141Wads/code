@@ -94,7 +94,7 @@
 			<tbody>
 				<?php
 					//gets the date, team names, team scores, and the winner from the database to be displayed 
-					foreach($dbh->query("select data, team1, team1score, team2, team2score, winner from game where team1='$teamName' or team2='$teamName' order by data desc") as $row) {
+					foreach($dbh->query("select data, team1, team1score, team2, team2score, winner from game2 where team1='$teamName' or team2='$teamName' order by data desc") as $row) {
 						echo "<tr>";
 						echo "<td name='date'>".$row[0]."</td>";
 						echo "<td>".$row[1]."</td>";
