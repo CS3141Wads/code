@@ -33,36 +33,29 @@
 		$dbh->query("update goalieLifetime set drafted = 0 where name = '".$rows[0]."'");
 	}
 	
-	$id = 1;
 	
+	$id = 1; // row id
 	date_default_timezone_set("America/New_York");
-	$date = date('Y-m-d H:i:s');
+	$date = date('Y-m-d H:i:s'); // current date
 	
-	
+	// logs the draft order for the coming draft with the time they draft for each turn
 	for($i = 1; $i < 7; $i++){
 		if($i%2 == 0){
 			foreach( $dbh->query("select name from Team order by name") as $rows){
 				//$date = date('Y-m-d H:i:s', strtotime('+'.$id*2 . ' minute'));
-				$date = date('Y-m-d H:i:s', strtotime('+'.$id*30 . ' second'));
+				$date = date('Y-m-d H:i:s', strtotime('+'.$id*10 . ' second'));
 				$dbh->query("insert into turn(ID, team, num, time) values( ".$id.", '".$rows[0]."', ".$i.", '".$date."' )");
 				$id++;
 			}
 		} else {
 			foreach( $dbh->query("select name from Team order by name desc") as $rows){
 			//	$date = date('Y-m-d H:i:s', strtotime('+'.$id*2 . ' minute'));
-			$date = date('Y-m-d H:i:s', strtotime('+'.$id*30 . ' second'));
+			$date = date('Y-m-d H:i:s', strtotime('+'.$id*10 . ' second'));
 				$dbh->query("insert into turn(ID, team, num, time) values( ".$id.",'".$rows[0]."', ".$i.", '".$date."' )");
 				$id++;
 			}
 		}	
 	}
-	
-	//date_default_timezone_set("America/New_York");
-	// TODO change time acordingly
-	//$date = date('Y-m-d H:i:s', strtotime('+2 minute'));
-	
-	
-	//$dbh->query(" update turn set time = '".$date."' where ID = 1");
-	
+
 	echo "done";
 ?>

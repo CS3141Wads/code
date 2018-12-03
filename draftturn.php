@@ -6,24 +6,21 @@
 		$config = parse_ini_file("db.ini");
 		$dbh = new PDO($config['dsn'], $config['username'], $config['password']);
 		$dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-
-	//	define("ch", 0);
 	
-	$time = 0;
-	$name = "421.3";
+	$time = 0; // inicalize time
+	$name = "421.3"; // random variable I picked to make draft work after the time is up
 	
 	
 		date_default_timezone_set("America/New_York");
 		foreach( $dbh->query("select team, time, ID from turn") as $rows){
-				$name = $rows[0];
-				$time = $rows[1];
-				$id = $rows[2];
-	//			$ch = 1;
+				$name = $rows[0]; // whoes turn is it
+				$time = $rows[1]; // what time the users turn ends
+				$id = $rows[2]; // currnet row id
 			break;
 		}
 		
-		if(time() >= strtotime($time) && $x == 0){
-			foreach( $dbh->query("select * from playerLifetime") as $rows){
+		if(time() >= strtotime($time) && $x == 0){ // is time past the time allowed. if so pick someone
+			foreach( $dbh->query("select * from playerLifetime") as $rows){ // get the first player
 				if($rows[9] == 0){
 				$player = $rows[0];
                 $team = $rows[1];
@@ -34,7 +31,7 @@
 				break;
 				}
 			}
-			foreach( $dbh->query("select * from goalieLifetime") as $rows){
+			foreach( $dbh->query("select * from goalieLifetime") as $rows){ // get the first goalie
 				if($rows[9] == 0 || $rows[9] == null ){
 					$goalie = $rows[0];
 					$gteam = $rows[1];
@@ -45,7 +42,7 @@
 				}
 			}
 			$dbh->beginTransaction();
-    		foreach( $dbh->query("select * from Team where name = '".$name."'") as $rows){
+    		foreach( $dbh->query("select * from Team where name = '".$name."'") as $rows){ // adds player to empty spot for a team and updates the drafted tables acordingly 
     			if($rows[2]==NULL){
     				$dbh->query("insert into draftedPlayer values('".$player."','".$team."','".$rows[1]."',".$goals.",".$assists.",".$penalty.", 0) ");
     				$dbh->query("update Team set player1 = '".$player."' where user = '".$rows[0]."' ");
@@ -72,16 +69,14 @@
 					$dbh->query("update goalieLifetime set drafted = 1 where name = '".$goalie."' ");
 				
 				}
-			//$date = date('Y-m-d H:i:s', strtotime('+2 minute'));
-	
-			//$id = $id + 1;
-			//$dbh->query(" update turn set time = '".$date."' where ID = ".$id."");
 			
     		} 
+			// deletes row from turn
 			if($name != "421.3"){
 				$dbh->query("delete from turn where ID = ".$id."");
 			}
 				$dbh->commit();
+		// if user already picked someone and doesnt need an auto draft then delete the row in turn
 		} else if (time() >= strtotime($time) && $x == 1 && $name != "421.3"){
 			$dbh->query("delete from turn where ID = ".$id."");
 		}
