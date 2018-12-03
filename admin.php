@@ -15,9 +15,9 @@
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.open("GET", "simulate.php");
             xmlhttp.send();
-            alert("Players and goalies have been assigned points!");
+            alert("Players and goalies have been assigned points, and matches have been made!");
         }
-        
+
     </script>
 
 	<!-- imports the CSS style -->
